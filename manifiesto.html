@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manifiesto | Vanguardia Vallenata</title>
+    <title>Manifiesto | Epifanio Collante</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
     
-    <!-- GSAP & ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
@@ -169,7 +168,7 @@
     <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
 
     <header>
-        <a href="index.html" class="logo">[ NOMBRE DEL ARTISTA ]</a>
+        <a href="index.html" class="logo">EPIFANIO COLLANTE</a>
         <div class="nav-links">
             <a href="index.html" class="btn-back">← VOLVER AL UMBRAL</a>
             <a href="manifiesto.html" class="nav-link active">Manifiesto</a>
@@ -179,29 +178,28 @@
     </header>
 
     <main class="manifesto-container">
-        <div class="reading-meta">TIEMPO DE LECTURA: 2 MINUTOS</div>
+        <div class="reading-meta">TIEMPO DE LECTURA: 2 MINUTOS // HISTORIA OFICIAL</div>
         
-        <h1 class="manifesto-title">El origen no es un ancla.<br><span>Es el impulso.</span></h1>
+        <h1 class="manifesto-title">El sentimiento convertido en canciones.<br><span>El legado de Fonseca.</span></h1>
         
         <div class="manifesto-content">
-            <p class="lead">Nacimos entre el polvo de la sabana, bajo un sol que no perdona y noches interminables donde el único idioma válido era el de un fuelle respirando. Pero la tradición no se honra repitiéndola ciegamente; se honra llevándola hacia el futuro.</p>
+            <p class="lead">Nacido el 21 de diciembre de 1991 en El Copey, Cesar, y criado en Fonseca, La Guajira. Desde muy pequeño, antes de tocar un acordeón real, Epifanio imitaba sus sonidos con cualquier objeto que tuviera a la mano, cantando con una naturalidad que presagiaba su destino.</p>
             
-            <p>La industria musical nos ha querido convencer de que el folclore debe mantenerse en una vitrina de museo, inofensivo, nostálgico y polvoriento. Nos exigen que seamos una postal pintoresca del Caribe. Nosotros rechazamos esa premisa. El acordeón no es un artefacto del pasado; es una máquina de percusión y melodía capaz de doblegar las frecuencias más sofisticadas de la vanguardia.</p>
+            <p>La pérdida de su padre durante su infancia marcó profundamente su historia. Aquel hombre que soñaba con verlo triunfar dejó un vacío que se transformó en la mayor fuerza motriz de su vida. La música dejó de ser un pasatiempo para convertirse en un santuario, una forma sagrada de honrar su memoria y expresar los sentimientos más profundos del alma.</p>
 
-            <p>Hemos reconstruido la arquitectura de nuestro sonido. Cada acorde, cada caja y cada guacharaca han sido medidos y recalibrados. No hacemos canciones para el olvido; diseñamos estructuras sonoras pensadas para colisionar con la estética contemporánea, la alta costura y el diseño industrial.</p>
+            <p>Con más de seis años de trayectoria constante, Epifanio ha esculpido un sonido inconfundible enfocado en el vallenato romántico, complementado por su talento como compositor. Obras como su primer álbum, <strong>"Firme Contigo"</strong>, y composiciones como *"Otro Tiempo"* (interpretada por Wendy Taborda), demuestran que su pluma tiene tanta fuerza como su voz.</p>
 
             <blockquote class="manifesto-quote">
-                "No pedimos un asiento en la mesa de la industria. Venimos a desarmar la mesa y construir el escenario encima."
+                "Cada escenario es un momento inolvidable. El vallenato romántico no se canta; se vive y se entrega como una experiencia de vida."
             </blockquote>
 
-            <p>Este portafolio no es un resumen de nuestra carrera. Es una declaración de guerra contra la mediocridad. Es para aquellos directores, marcas y oyentes que entienden que el lujo moderno no radica en el exceso, sino en la autenticidad extrema expresada a través de un diseño implacable.</p>
+            <p>Su arte ha trascendido fronteras, conquistando escenarios internacionales en <strong>Perú</strong> —donde recibió un reconocimiento oficial por su humildad y profunda conexión con el público—, además de festivales en Armenia y los icónicos Carnavales de Fonseca.</p>
 
-            <p>No somos costumbrismo. Somos el sonido que define el mañana, forjado en el calor de nuestra raíz.</p>
+            <p>Epifanio Collante no solo interpreta; transforma el sentimiento en arte puro. La voz romántica de una nueva era.</p>
         </div>
     </main>
 
     <script>
-        // Barra de progreso de lectura
         window.onscroll = function() {
             var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -209,7 +207,6 @@
             document.getElementById("myBar").style.width = scrolled + "%";
         };
 
-        // Coreografía GSAP para el Manifiesto
         gsap.to(".reading-meta", { opacity: 1, y: 0, duration: 1, ease: "power3.out" });
         gsap.to(".manifesto-title", { opacity: 1, y: 0, duration: 1.2, delay: 0.2, ease: "power3.out" });
 
