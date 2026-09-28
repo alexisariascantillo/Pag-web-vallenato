@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manifiesto | Vanguardia Vallenata</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-base: #FFFFFF;
+            --surface-card: #F5F5F7;
+            --text-main: #0A0A0A;
+            --accent-gold: #C5A059;
+            --gray-muted: #666666;
+            --border-subtle: rgba(0, 0, 0, 0.1);
+            --font-code: 'Fira Code', monospace;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: transparent;
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--accent-gold);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0));
+            backdrop-filter: blur(10px);
+        }
+
+        .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-main); text-decoration: none; }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-link { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gray-muted); text-decoration: none; transition: color 0.3s ease; font-weight: 500;}
+        .nav-link.active { color: var(--text-main); font-weight: 600; border-bottom: 1px solid var(--text-main); padding-bottom: 2px;}
+        .nav-link:hover { color: var(--text-main); }
+        
+        .btn-back {
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            color: var(--gray-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+        .btn-back:hover { color: var(--text-main); }
+
+        .manifesto-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 200px 20px 100px 20px;
+        }
+
+        .reading-meta {
+            font-family: var(--font-code);
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .reading-meta::before {
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 1px;
+            background: var(--accent-gold);
+        }
+
+        .manifesto-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .manifesto-title span { color: var(--gray-muted); }
+
+        .manifesto-content p, .manifesto-content blockquote {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .manifesto-content p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: var(--text-main);
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .manifesto-content p.lead {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 50px;
+        }
+
+        .manifesto-quote {
+            margin: 60px 0;
+            padding: 40px 0;
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            line-height: 1.3;
+            font-weight: 700;
+            color: var(--text-main);
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 20px 30px; }
+            .manifesto-container { padding: 150px 20px 80px 20px; }
+            .manifesto-quote { font-size: 1.4rem; padding: 30px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
+
+    <header>
+        <a href="index.html" class="logo">[ NOMBRE DEL ARTISTA ]</a>
+        <div class="nav-links">
+            <a href="index.html" class="btn-back">← VOLVER AL UMBRAL</a>
+            <a href="manifiesto.html" class="nav-link active">Manifiesto</a>
+            <a href="archivo.html" class="nav-link">Archivo Visual</a>
+            <a href="himnos.html" class="nav-link">Himnos</a>
+        </div>
+    </header>
+
+    <main class="manifesto-container">
+        <div class="reading-meta">TIEMPO DE LECTURA: 2 MINUTOS</div>
+        
+        <h1 class="manifesto-title">El origen no es un ancla.<br><span>Es el impulso.</span></h1>
+        
+        <div class="manifesto-content">
+            <p class="lead">Nacimos entre el polvo de la sabana, bajo un sol que no perdona y noches interminables donde el único idioma válido era el de un fuelle respirando. Pero la tradición no se honra repitiéndola ciegamente; se honra llevándola hacia el futuro.</p>
+            
+            <p>La industria musical nos ha querido convencer de que el folclore debe mantenerse en una vitrina de museo, inofensivo, nostálgico y polvoriento. Nos exigen que seamos una postal pintoresca del Caribe. Nosotros rechazamos esa premisa. El acordeón no es un artefacto del pasado; es una máquina de percusión y melodía capaz de doblegar las frecuencias más sofisticadas de la vanguardia.</p>
+
+            <p>Hemos reconstruido la arquitectura de nuestro sonido. Cada acorde, cada caja y cada guacharaca han sido medidos y recalibrados. No hacemos canciones para el olvido; diseñamos estructuras sonoras pensadas para colisionar con la estética contemporánea, la alta costura y el diseño industrial.</p>
+
+            <blockquote class="manifesto-quote">
+                "No pedimos un asiento en la mesa de la industria. Venimos a desarmar la mesa y construir el escenario encima."
+            </blockquote>
+
+            <p>Este portafolio no es un resumen de nuestra carrera. Es una declaración de guerra contra la mediocridad. Es para aquellos directores, marcas y oyentes que entienden que el lujo moderno no radica en el exceso, sino en la autenticidad extrema expresada a través de un diseño implacable.</p>
+
+            <p>No somos costumbrismo. Somos el sonido que define el mañana, forjado en el calor de nuestra raíz.</p>
+        </div>
+    </main>
+
+    <script>
+        // Barra de progreso de lectura
+        window.onscroll = function() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
+        };
+
+        // Coreografía GSAP para el Manifiesto
+        gsap.to(".reading-meta", { opacity: 1, y: 0, duration: 1, ease: "power3.out" });
+        gsap.to(".manifesto-title", { opacity: 1, y: 0, duration: 1.2, delay: 0.2, ease: "power3.out" });
+
+        gsap.utils.toArray('.manifesto-content p, .manifesto-content blockquote').forEach((el, i) => {
+            gsap.to(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 90%",
+                    toggleActions: "play none none reverse"
+                },
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+    </script>
+</body>
+</html>

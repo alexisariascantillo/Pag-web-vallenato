@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Himnos | Vanguardia Vallenata</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-base: #FFFFFF;
+            --surface-card: #F5F5F7;
+            --surface-dark: #111111;
+            --text-main: #0A0A0A;
+            --text-light: #FFFFFF;
+            --accent-gold: #C5A059;
+            --gray-muted: #888888;
+            --border-subtle: rgba(0, 0, 0, 0.1);
+            --font-code: 'Fira Code', monospace;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0));
+            backdrop-filter: blur(10px);
+        }
+
+        .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-main); text-decoration: none; }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-link { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gray-muted); text-decoration: none; transition: color 0.3s ease; font-weight: 500;}
+        .nav-link.active { color: var(--text-main); font-weight: 600; border-bottom: 1px solid var(--text-main); padding-bottom: 2px;}
+        .nav-link:hover { color: var(--text-main); }
+        
+        .btn-back {
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            color: var(--gray-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+        .btn-back:hover { color: var(--text-main); }
+
+        .vault-header {
+            padding: 200px 60px 80px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            border-bottom: 1px solid var(--border-subtle);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .vault-header h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(3rem, 5vw, 5rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        
+        .vault-header h1 span { color: var(--accent-gold); }
+
+        .vault-meta {
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+            color: var(--gray-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            gap: 40px;
+        }
+
+        .audio-laboratory {
+            padding: 80px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+        }
+
+        .audio-module {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            background: var(--surface-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .audio-module:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            border-color: var(--accent-gold);
+        }
+
+        .module-info {
+            padding: 60px;
+            border-right: 1px solid var(--border-subtle);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .track-year {
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .track-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .track-desc {
+            font-size: 1rem;
+            color: var(--gray-muted);
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .track-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            font-family: var(--font-code);
+            font-size: 0.75rem;
+            color: var(--text-main);
+            text-transform: uppercase;
+        }
+        
+        .spec-item span { display: block; color: var(--gray-muted); margin-bottom: 4px; }
+
+        .module-engine {
+            background: var(--surface-dark);
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .engine-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-code);
+            color: var(--text-light);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stems-container {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .stem-track {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .stem-label {
+            font-family: var(--font-code);
+            font-size: 0.75rem;
+            color: var(--gray-muted);
+            width: 80px;
+        }
+
+        .stem-wave {
+            flex-grow: 1;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .wave-bar {
+            flex: 1;
+            height: 2px;
+            background: var(--gray-muted);
+            transition: height 0.1s ease, background 0.3s ease;
+        }
+
+        .audio-module.playing .wave-bar {
+            background: var(--accent-gold);
+            animation: equalize 1s infinite alternate;
+        }
+        
+        .audio-module.playing .stem-wave.bass .wave-bar { animation-duration: 0.8s; }
+        .audio-module.playing .stem-wave.mid .wave-bar { animation-duration: 0.5s; }
+        .audio-module.playing .stem-wave.high .wave-bar { animation-duration: 1.2s; }
+
+        .audio-module.playing .wave-bar:nth-child(2n) { animation-delay: 0.2s; }
+        .audio-module.playing .wave-bar:nth-child(3n) { animation-delay: 0.4s; }
+        .audio-module.playing .wave-bar:nth-child(5n) { animation-delay: 0.6s; }
+
+        @keyframes equalize {
+            0% { height: 2px; }
+            100% { height: 100%; }
+        }
+
+        .play-btn {
+            position: absolute;
+            bottom: 60px;
+            right: 60px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--bg-base);
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .play-btn::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 14px solid var(--text-main);
+            margin-left: 4px;
+            transition: border-color 0.3s;
+        }
+
+        .audio-module.playing .play-btn { background: var(--accent-gold); }
+        .audio-module.playing .play-btn::after { border-left-color: var(--text-light); }
+        .play-btn:hover { transform: scale(1.1); }
+
+        @media (max-width: 900px) {
+            .audio-module { grid-template-columns: 1fr; }
+            .module-info { border-right: none; border-bottom: 1px solid var(--border-subtle); padding: 40px 20px; }
+            .module-engine { padding: 40px 20px; }
+            .vault-header { padding: 150px 20px 60px 20px; }
+            .audio-laboratory { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">[ NOMBRE DEL ARTISTA ]</a>
+        <div class="nav-links">
+            <a href="index.html" class="btn-back">← VOLVER AL UMBRAL</a>
+            <a href="manifiesto.html" class="nav-link">Manifiesto</a>
+            <a href="archivo.html" class="nav-link">Archivo Visual</a>
+            <a href="himnos.html" class="nav-link active">Himnos</a>
+        </div>
+    </header>
+
+    <section class="vault-header">
+        <h1>Ingeniería <span>Sonora.</span></h1>
+        <div class="vault-meta">
+            <span>REGISTROS MASTER: 02</span>
+            <span>FREQ: 432 Hz</span>
+            <span>ESTADO: CALIBRADO</span>
+        </div>
+    </section>
+
+    <main class="audio-laboratory">
+        
+        <article class="audio-module" id="module1">
+            <div class="module-info">
+                <div class="track-year">ACTO I — 2024</div>
+                <h2 class="track-title">El Origen de la Sombra</h2>
+                <p class="track-desc">La crudeza del acordeón analógico procesada a través de compresores de tubo. Grabado en una sola toma en la sabana, capturando la latencia exacta de la noche.</p>
+                <div class="track-specs">
+                    <div class="spec-item"><span>BPM</span> 118.00</div>
+                    <div class="spec-item"><span>TONALIDAD</span> DO MENOR</div>
+                    <div class="spec-item"><span>MASTERING</span> ANALÓGICO</div>
+                    <div class="spec-item"><span>DURACIÓN</span> 45:12 MIN</div>
+                </div>
+            </div>
+            <div class="module-engine">
+                <div class="engine-header">
+                    <span>TELEMETRÍA DE STEMS</span>
+                    <span class="status-indicator">STANDBY</span>
+                </div>
+                <div class="stems-container">
+                    <div class="stem-track"><span class="stem-label">ACORDEÓN</span><div class="stem-wave mid"></div></div>
+                    <div class="stem-track"><span class="stem-label">CAJA / PERC</span><div class="stem-wave bass"></div></div>
+                    <div class="stem-track"><span class="stem-label">GUACHARACA</span><div class="stem-wave high"></div></div>
+                </div>
+                <button class="play-btn" onclick="togglePlay('module1')" title="Iniciar Motor de Audio"></button>
+            </div>
+        </article>
+
+        <article class="audio-module" id="module2">
+            <div class="module-info">
+                <div class="track-year">ACTO II — 2025</div>
+                <h2 class="track-title">Santuario de Síntesis</h2>
+                <p class="track-desc">La deconstrucción del folclore. Las notas del acordeón fueron aisladas y pasadas por sintetizadores modulares, creando una atmósfera de alta tensión cinematográfica.</p>
+                <div class="track-specs">
+                    <div class="spec-item"><span>BPM</span> 124.00</div>
+                    <div class="spec-item"><span>TONALIDAD</span> FA SOSTENIDO</div>
+                    <div class="spec-item"><span>MASTERING</span> HÍBRIDO (TAPE/DIGITAL)</div>
+                    <div class="spec-item"><span>DURACIÓN</span> 52:08 MIN</div>
+                </div>
+            </div>
+            <div class="module-engine">
+                <div class="engine-header">
+                    <span>TELEMETRÍA DE STEMS</span>
+                    <span class="status-indicator">STANDBY</span>
+                </div>
+                <div class="stems-container">
+                    <div class="stem-track"><span class="stem-label">SYNTH CORD</span><div class="stem-wave mid"></div></div>
+                    <div class="stem-track"><span class="stem-label">LOW BASS</span><div class="stem-wave bass"></div></div>
+                    <div class="stem-track"><span class="stem-label">VOZ RAW</span><div class="stem-wave high"></div></div>
+                </div>
+                <button class="play-btn" onclick="togglePlay('module2')" title="Iniciar Motor de Audio"></button>
+            </div>
+        </article>
+
+    </main>
+
+    <script>
+        function buildWaves() {
+            const waves = document.querySelectorAll('.stem-wave');
+            waves.forEach(wave => {
+                for(let i=0; i<30; i++) {
+                    const bar = document.createElement('div');
+                    bar.classList.add('wave-bar');
+                    wave.appendChild(bar);
+                }
+            });
+        }
+        buildWaves();
+
+        function togglePlay(moduleId) {
+            const module = document.getElementById(moduleId);
+            const status = module.querySelector('.status-indicator');
+            if (module.classList.contains('playing')) {
+                module.classList.remove('playing');
+                status.textContent = 'STANDBY';
+                status.style.color = 'var(--text-light)';
+            } else {
+                document.querySelectorAll('.audio-module').forEach(m => {
+                    m.classList.remove('playing');
+                    m.querySelector('.status-indicator').textContent = 'STANDBY';
+                    m.querySelector('.status-indicator').style.color = 'var(--text-light)';
+                });
+                module.classList.add('playing');
+                status.textContent = 'TRANSMITIENDO FRECUENCIA...';
+                status.style.color = 'var(--accent-gold)';
+            }
+        }
+
+        // Coreografía GSAP Himnos
+        gsap.to(".vault-header", { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" });
+
+        gsap.utils.toArray('.audio-module').forEach((mod, i) => {
+            gsap.to(mod, {
+                scrollTrigger: {
+                    trigger: mod,
+                    start: "top 85%",
+                    toggleActions: "play none none reverse"
+                },
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power4.out",
+                delay: i * 0.2
+            });
+        });
+    </script>
+</body>
+</html>
