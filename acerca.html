@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acerca de mí | Epifanio Collante</title>
+    <title>Acerca de Mí | Epifanio Collante</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,59 +13,130 @@
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --bg-base: #FFFFFF; --text-main: #0A0A0A; --accent-gold: #C5A059; --gray-muted: #666666; --border-subtle: rgba(0, 0, 0, 0.1); --font-code: 'Fira Code', monospace; --spacing-container: clamp(20px, 5vw, 60px); }
+        :root { --bg-base: #FFFFFF; --surface-card: #F5F5F7; --text-main: #0A0A0A; --accent-gold: #C5A059; --gray-muted: #888888; --border-subtle: rgba(0, 0, 0, 0.1); --font-code: 'Fira Code', monospace; --spacing-container: clamp(20px, 5vw, 60px); }
         body { background-color: var(--bg-base); color: var(--text-main); font-family: 'Inter', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
 
         .progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 3px; background: transparent; z-index: 1000; }
         .progress-bar { height: 100%; background: var(--accent-gold); width: 0%; transition: width 0.1s ease; }
 
+        /* HEADER SINCRO */
         header { position: fixed; top: 0; left: 0; width: 100%; padding: clamp(15px, 3vh, 30px) var(--spacing-container); display: flex; justify-content: space-between; align-items: center; z-index: 100; background: linear-gradient(to bottom, rgba(255,255,255,0.98), rgba(255,255,255,0.85)); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-subtle); }
-        .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(0.85rem, 1.8vw, 1.1rem); letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-main); text-decoration: none; }
-        .nav-links { display: flex; gap: clamp(10px, 2.5vw, 30px); align-items: center; }
-        .nav-link { font-size: clamp(0.65rem, 1vw, 0.75rem); text-transform: uppercase; letter-spacing: 1px; color: var(--gray-muted); text-decoration: none; font-weight: 500; }
-        .nav-link.active { color: var(--text-main); border-bottom: 1px solid var(--text-main); }
-        .btn-back { font-family: var(--font-code); font-size: 0.8rem; color: var(--gray-muted); text-decoration: none; display: flex; align-items: center; gap: 8px; }
-
-        .manifesto-container { max-width: 680px; margin: 0 auto; padding: clamp(150px, 20vh, 200px) var(--spacing-container) 100px var(--spacing-container); }
-        .reading-meta { font-family: var(--font-code); font-size: 0.75rem; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; display: flex; align-items: center; gap: 15px; opacity: 0; transform: translateY(20px); }
-        .reading-meta::before { content: ''; display: inline-block; width: 30px; height: 1px; background: var(--accent-gold); }
-        .manifesto-title { font-family: 'Syne', sans-serif; font-size: clamp(2.2rem, 4vw, 4rem); font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: 60px; opacity: 0; transform: translateY(30px); }
-        .manifesto-title span { color: var(--gray-muted); }
+        .logo-text { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(0.85rem, 1.8vw, 1.1rem); letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-main); text-decoration: none; display: block; z-index: 10; }
+        .logo-img { display: none; max-height: 55px; width: auto; object-fit: contain; z-index: 10; }
         
-        .manifesto-content p, .manifesto-content blockquote { opacity: 0; transform: translateY(40px); }
-        .manifesto-content p { font-size: clamp(1rem, 1.2vw, 1.15rem); line-height: 1.8; color: var(--text-main); margin-bottom: 30px; }
-        .manifesto-content p.lead { font-size: clamp(1.15rem, 1.5vw, 1.3rem); font-weight: 500; margin-bottom: 50px; }
-        .manifesto-quote { margin: 60px 0; padding: 40px 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); font-family: 'Syne', sans-serif; font-size: clamp(1.4rem, 2vw, 1.8rem); line-height: 1.3; font-weight: 700; text-align: center; }
+        .nav-links { display: flex; gap: clamp(10px, 2.5vw, 30px); align-items: center; }
+        .nav-link { font-size: clamp(0.65rem, 1vw, 0.75rem); text-transform: uppercase; letter-spacing: 1px; color: var(--gray-muted); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+        .nav-link:hover { color: var(--text-main); }
+        .nav-link.active { color: var(--text-main); border-bottom: 1px solid var(--text-main); }
+        .btn-back { font-family: var(--font-code); font-size: 0.8rem; color: var(--gray-muted); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.3s; }
+        .btn-back:hover { color: var(--text-main); }
+        
+        .vault-btn { font-size: clamp(0.65rem, 1vw, 0.75rem); text-transform: uppercase; letter-spacing: 1px; color: var(--accent-gold); background: none; border: none; border-bottom: 1px solid var(--accent-gold); padding-bottom: 2px; transition: opacity 0.3s ease; font-weight: 600; cursor: pointer; }
+        .vault-btn:hover { opacity: 0.7; }
 
-        @media (max-width: 600px) { header { flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links { width: 100%; justify-content: space-between; } }
+        /* HEADER DE SECCIÓN */
+        .vault-header { padding: clamp(150px, 20vh, 200px) var(--spacing-container) 40px var(--spacing-container); max-width: 1400px; margin: 0 auto; opacity: 0; transform: translateY(30px); }
+        .vault-header h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.5rem, 5vw, 5rem); font-weight: 800; letter-spacing: -1px; line-height: 1.1; margin-bottom: 20px; }
+        .vault-header h1 span { color: var(--accent-gold); }
+        
+        /* --- EL MONOLITO FOTOGRÁFICO EDITORIAL --- */
+        .bio-hero-container { padding: 0 var(--spacing-container); max-width: 1400px; margin: 0 auto 60px auto; opacity: 0; transform: translateY(40px); }
+        .bio-hero-image { width: 100%; aspect-ratio: 16 / 7; border-radius: 4px; overflow: hidden; position: relative; background: #000; }
+        .bio-hero-image img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; filter: contrast(105%) brightness(0.95); transition: transform 10s ease; }
+        .bio-hero-image:hover img { transform: scale(1.03); }
+        
+        /* LA NARRATIVA BIOGRÁFICA */
+        .bio-content { max-width: 800px; margin: 0 auto; padding: 0 var(--spacing-container) 100px var(--spacing-container); opacity: 0; transform: translateY(40px); }
+        .bio-lead { font-family: 'Syne', sans-serif; font-size: clamp(1.4rem, 2vw, 1.8rem); font-weight: 700; line-height: 1.4; color: var(--text-main); margin-bottom: 40px; border-left: 3px solid var(--accent-gold); padding-left: 20px; }
+        .bio-text { font-size: 1.05rem; line-height: 1.8; color: #444444; margin-bottom: 25px; }
+        .bio-text span { font-weight: 600; color: var(--text-main); }
+
+        /* MODAL CONTÁCTANOS (SINCRO) */
+        .vault-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(15px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; padding: 20px; }
+        .vault-modal.active { opacity: 1; pointer-events: auto; }
+        .vault-content { background: var(--surface-card); border: 1px solid var(--border-subtle); box-shadow: 0 30px 60px rgba(0,0,0,0.15); padding: clamp(30px, 5vw, 50px); max-width: 520px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative; opacity: 0; transform: scale(0.95); transition: opacity 0.4s ease, transform 0.4s ease; border-radius: 4px; }
+        .vault-content::-webkit-scrollbar { width: 4px; }
+        .vault-content::-webkit-scrollbar-thumb { background: var(--accent-gold); border-radius: 4px; }
+        .vault-modal.active .vault-content { opacity: 1; transform: scale(1); }
+        .close-vault { position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--gray-muted); font-size: 1.5rem; cursor: pointer; transition: color 0.3s; z-index: 10; }
+        .close-vault:hover { color: var(--text-main); }
+        .modal-logo { max-width: 250px; width: 100%; height: auto; object-fit: contain; margin: 0 auto 25px auto; display: block; }
+        .modal-title { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; margin-bottom: 12px; color: var(--text-main); text-align: center; }
+        .modal-subtitle { font-size: 0.85rem; color: var(--gray-muted); line-height: 1.6; margin-bottom: 30px; text-align: center; }
+        .contact-group { margin-bottom: 20px; text-align: center; }
+        .contact-label { font-family: var(--font-code); font-size: 0.7rem; color: var(--gray-muted); text-transform: uppercase; margin-bottom: 4px; }
+        .contact-data { font-size: 1.05rem; color: var(--text-main); font-weight: 600; text-decoration: none; transition: color 0.3s; display: block; }
+        .contact-data:hover { color: var(--accent-gold); }
+        .cta-main { display: block; width: 100%; background-color: var(--text-main); color: var(--bg-base); border: none; padding: 16px; font-family: 'Syne', sans-serif; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all 0.4s ease; margin-top: 35px; margin-bottom: 35px; text-decoration: none; text-align: center; }
+        .cta-main:hover { background-color: var(--accent-gold); color: var(--text-main); }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 12px; align-items: flex-start; padding: 15px var(--spacing-container); }
+            .logo-text { display: none; }
+            .logo-img { display: block; }
+            .nav-links { width: 100%; justify-content: flex-end; gap: 15px; flex-wrap: wrap; position: static; transform: none; }
+            
+            /* En móvil, la foto adopta una proporción vertical para que la postura y el traje se vean imponentes */
+            .bio-hero-image { aspect-ratio: 4 / 5; border-radius: 2px; }
+            .bio-content { padding-top: 20px; }
+        }
     </style>
 </head>
 <body>
     <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
 
     <header>
-        <a href="index.html" class="logo">EPIFANIO COLLANTE</a>
+        <a href="index.html" class="logo-text">EPIFANIO COLLANTE</a>
+        <a href="index.html"><img src="image_414963.png" alt="Epifanio Collante Logo" class="logo-img"></a>
         <div class="nav-links">
             <a href="index.html" class="btn-back">← UMBRAL</a>
             <a href="acerca.html" class="nav-link active">Acerca de mí</a>
             <a href="archivo.html" class="nav-link">Archivo</a>
             <a href="discografia.html" class="nav-link">Discografía</a>
+            <button class="vault-btn" onclick="toggleVault()">Contáctanos</button>
         </div>
     </header>
 
-    <main class="manifesto-container">
-        <div class="reading-meta">TIEMPO DE LECTURA: 2 MIN // HISTORIA OFICIAL</div>
-        <h1 class="manifesto-title">El sentimiento convertido en canciones.<br><span>El legado de Fonseca.</span></h1>
-        
-        <div class="manifesto-content">
-            <p class="lead">Nacido el 21 de diciembre de 1991 en El Copey, Cesar, y criado en Fonseca, La Guajira. Desde muy pequeño, antes de tocar un acordeón real, Epifanio imitaba sus sonidos con cualquier objeto que tuviera a la mano.</p>
-            <p>La pérdida de su padre durante su infancia marcó profundamente su historia. Aquel hombre que soñaba con verlo triunfar dejó un vacío que se transformó en la mayor fuerza motriz de su vida. La música dejó de ser un pasatiempo para convertirse en un santuario, una forma sagrada de honrar su memoria y expresar los sentimientos más profundos del alma.</p>
-            <p>Con más de seis años de trayectoria constante, Epifanio ha esculpido un sonido inconfundible enfocado en el vallenato romántico, complementado por su talento como compositor. Obras como su primer álbum, <strong>"Firme Contigo"</strong>, y composiciones como *"Otro Tiempo"*, demuestran que su pluma tiene tanta fuerza como su voz.</p>
-            <blockquote class="manifesto-quote">"Cada escenario es un momento inolvidable. El vallenato romántico no se canta; se vive y se entrega como una experiencia de vida."</blockquote>
-            <p>Su arte ha trascendido fronteras, conquistando escenarios internacionales en <strong>Perú</strong>, además de festivales en Armenia y los icónicos Carnavales de Fonseca.</p>
-            <p>Epifanio Collante no solo interpreta; transforma el sentimiento en arte puro. La voz romántica de una nueva era.</p>
+    <section class="vault-header">
+        <h1>Acerca de <span>Mí.</span></h1>
+    </section>
+
+    <!-- INYECCIÓN FOTOGRÁFICA PRE-LECTURA -->
+    <div class="bio-hero-container">
+        <div class="bio-hero-image">
+            <img src="image_4f4a00.jpg" alt="Retrato Oficial - Epifanio Collante">
         </div>
+    </div>
+
+    <!-- NARRATIVA -->
+    <main class="bio-content">
+        <h2 class="bio-lead">El origen no es un ancla. Es el impulso definitivo que convierte el sentimiento en música.</h2>
+        
+        <p class="bio-text">Nacido en <span>El Copey, Cesar</span>, y criado en el corazón vibrante de <span>Fonseca, La Guajira</span>, Epifanio Collante es la materialización del vallenato romántico contemporáneo. Su conexión con la música no fue heredada en una academia; fue forjada en la intuición pura, imitando los pitos y bajos de un acordeón imaginario desde su infancia.</p>
+        
+        <p class="bio-text">La pérdida de su padre se transformó en el catalizador de su carrera, convirtiendo su voz y sus composiciones de autoría propia en un vehículo de sanación y legado. No solo interpreta canciones; traduce experiencias, dolores y victorias en una puesta en escena que honra la raíz del folclore pero abraza la sofisticación moderna.</p>
+        
+        <p class="bio-text">Con una presencia escénica arrolladora y un repertorio que viaja desde las leyendas doradas hasta la nueva era, Epifanio Collante no persigue tendencias: <span>construye emociones inolvidables.</span></p>
     </main>
+
+    <!-- MODAL THE VAULT -->
+    <div class="vault-modal" id="vaultModal">
+        <div class="vault-content">
+            <button class="close-vault" onclick="toggleVault()">&times;</button>
+            <img src="image_414963.png" alt="Epifanio Collante Logo" class="modal-logo">
+            <h2 class="modal-title">CONTÁCTANOS</h2>
+            <p class="modal-subtitle">Gestión de Contrataciones para Eventos, Festivales y Eventos Privados.</p>
+            <div class="contact-group">
+                <p class="contact-label">Teléfono / WhatsApp</p>
+                <a href="tel:+573158299357" class="contact-data">+57 315 829 9357</a>
+            </div>
+            <div class="contact-group">
+                <p class="contact-label">Correo Electrónico</p>
+                <a href="mailto:angelica.collanteperez@gmail.com" class="contact-data">angelica.collanteperez@gmail.com</a>
+            </div>
+            <a href="mailto:angelica.collanteperez@gmail.com?subject=Solicitud de Contratación - Epifanio Collante" class="cta-main">SOLICITAR PROPUESTA</a>
+        </div>
+    </div>
 
     <script>
         window.onscroll = function() {
@@ -74,11 +145,12 @@
             document.getElementById("myBar").style.width = (winScroll / height) * 100 + "%";
         };
 
-        gsap.to(".reading-meta", { opacity: 1, y: 0, duration: 1, ease: "power3.out" });
-        gsap.to(".manifesto-title", { opacity: 1, y: 0, duration: 1.2, delay: 0.2, ease: "power3.out" });
-        gsap.utils.toArray('.manifesto-content p, .manifesto-content blockquote').forEach(el => {
-            gsap.to(el, { scrollTrigger: { trigger: el, start: "top 90%" }, opacity: 1, y: 0, duration: 1, ease: "power3.out" });
-        });
+        function toggleVault() { document.getElementById('vaultModal').classList.toggle('active'); }
+
+        // Animaciones Escaladas de entrada
+        gsap.to(".vault-header", { opacity: 1, y: 0, duration: 1.2 });
+        gsap.to(".bio-hero-container", { opacity: 1, y: 0, duration: 1.2, delay: 0.2, ease: "power3.out" });
+        gsap.to(".bio-content", { scrollTrigger: { trigger: ".bio-content", start: "top 85%" }, opacity: 1, y: 0, duration: 1.2, ease: "power3.out" });
     </script>
 </body>
 </html>

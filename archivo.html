@@ -57,7 +57,6 @@
         .film-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background-color: var(--surface-card); overflow: hidden; border: 1px solid var(--border-subtle); opacity: 0; transform: translateY(50px); border-radius: 4px; }
         @media (min-width: 900px) { .film-frame { aspect-ratio: 2.35 / 1; } } /* Proporción Cinematográfica Ultrawide en Escritorio */
         
-        /* El filtro grayscale elimina distracciones y unifica el portafolio, el hover revela el color real */
         .film-frame img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(110%) brightness(0.9); transition: filter 0.8s ease, transform 10s linear; }
         .film-frame:hover img { filter: grayscale(0%) contrast(100%) brightness(1); transform: scale(1.03); }
 
@@ -96,7 +95,7 @@
             .nav-links { width: 100%; justify-content: flex-end; gap: 15px; flex-wrap: wrap; position: static; transform: none; }
             .vault-content { padding: 30px 20px; }
             .modal-logo { max-width: 180px; }
-            .video-grid { grid-template-columns: 1fr; } /* En móvil se apilan perfectamente uno sobre otro */
+            .video-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -165,9 +164,9 @@
                     <img src="image_4ee7eb.jpg" alt="Entrevista en Radio Nacional de Colombia - Epifanio Collante">
                 </div>
                 
-                <!-- PRODUCCIÓN: Estudio de Grabación -->
+                <!-- PRODUCCIÓN: Estudio de Grabación (CON EL FOCO CORREGIDO AL ROSTRO) -->
                 <div class="film-frame">
-                    <img src="image_4ee806.jpg" alt="Epifanio Collante en Estudio de Grabación">
+                    <img src="image_4ee806.jpg" alt="Epifanio Collante en Estudio de Grabación" style="object-position: center 10%;">
                 </div>
 
                 <!-- REGISTRO PREVIO 1 -->
