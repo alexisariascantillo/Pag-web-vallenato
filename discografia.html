@@ -76,7 +76,7 @@
         .cover-songs li::before { content: '■'; color: var(--accent-gold); font-size: 0.6rem; margin-top: 3px; }
         .song-meta { display: block; font-size: 0.7rem; color: #AAAAAA; margin-top: 2px; }
 
-        /* --- NUEVO MÓDULO: COLABORACIÓN CINEMATOGRÁFICA --- */
+        /* --- ESCAPARATE CINEMATOGRÁFICO --- */
         .video-showcase { 
             margin-top: 40px; 
             opacity: 0; 
@@ -324,12 +324,12 @@
             </div>
         </div>
 
-        <!-- EL NUEVO ESCAPARATE CINEMATOGRÁFICO -->
+        <!-- EL ESCAPARATE CINEMATOGRÁFICO BLINDADO -->
         <div class="video-showcase">
             <h2 class="section-subtitle">Colaboración Reciente</h2>
             <div class="video-wrapper">
-                <!-- Se inyecta la API con parámetros para eliminar distracciones (rel=0, modestbranding=1) -->
-                <iframe src="https://www.youtube.com/embed/zZe73c8lpQ0?rel=0&modestbranding=1" title="Tiempo de Esperanza - Epifanio Collante" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <!-- HEMOS INYECTADO: youtube-nocookie.com, referrerpolicy y permisos extendidos para forzar el protocolo HTTP -->
+                <iframe src="https://www.youtube-nocookie.com/embed/zZe73c8lpQ0?rel=0&modestbranding=1" title="Tiempo de Esperanza - Epifanio Collante" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
             <div class="video-caption">
                 <span>Tiempo de Esperanza</span>
@@ -399,7 +399,6 @@
             gsap.to(card, { scrollTrigger: { trigger: card, start: "top 90%" }, opacity: 1, y: 0, duration: 0.8, delay: (i % 3) * 0.1 });
         });
 
-        /* Animación fluida para revelar la pantalla de cine */
         gsap.to(".video-showcase", { scrollTrigger: { trigger: ".video-showcase", start: "top 85%" }, opacity: 1, y: 0, duration: 1.2, ease: "power3.out" });
     </script>
 </body>
