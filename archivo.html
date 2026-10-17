@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archivo Visual | Epifanio Collante</title>
+    <title>Archivo Multimedia | Epifanio Collante</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,78 +13,201 @@
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --bg-base: #FFFFFF; --text-main: #0A0A0A; --accent-gold: #C5A059; --gray-muted: #666666; --border-subtle: rgba(0, 0, 0, 0.1); --font-code: 'Fira Code', monospace; --spacing-container: clamp(20px, 5vw, 60px); }
+        :root { --bg-base: #FFFFFF; --surface-card: #F5F5F7; --surface-dark: #111111; --text-main: #0A0A0A; --text-light: #FFFFFF; --accent-gold: #C5A059; --gray-muted: #888888; --border-subtle: rgba(0, 0, 0, 0.1); --font-code: 'Fira Code', monospace; --spacing-container: clamp(20px, 5vw, 60px); }
         body { background-color: var(--bg-base); color: var(--text-main); font-family: 'Inter', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
 
         .progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 3px; background: transparent; z-index: 1000; }
         .progress-bar { height: 100%; background: var(--accent-gold); width: 0%; transition: width 0.1s ease; }
 
+        /* HEADER ASIMÉTRICO (SINCRONIZADO) */
         header { position: fixed; top: 0; left: 0; width: 100%; padding: clamp(15px, 3vh, 30px) var(--spacing-container); display: flex; justify-content: space-between; align-items: center; z-index: 100; background: linear-gradient(to bottom, rgba(255,255,255,0.98), rgba(255,255,255,0.85)); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-subtle); }
-        .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(0.85rem, 1.8vw, 1.1rem); letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-main); text-decoration: none; }
+        .logo-text { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(0.85rem, 1.8vw, 1.1rem); letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-main); text-decoration: none; display: block; z-index: 10; }
+        .logo-img { display: none; max-height: 55px; width: auto; object-fit: contain; z-index: 10; }
+        
         .nav-links { display: flex; gap: clamp(10px, 2.5vw, 30px); align-items: center; }
-        .nav-link { font-size: clamp(0.65rem, 1vw, 0.75rem); text-transform: uppercase; letter-spacing: 1px; color: var(--gray-muted); text-decoration: none; font-weight: 500; }
+        .nav-link { font-size: clamp(0.65rem, 1vw, 0.75rem); text-transform: uppercase; letter-spacing: 1px; color: var(--gray-muted); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+        .nav-link:hover { color: var(--text-main); }
         .nav-link.active { color: var(--text-main); border-bottom: 1px solid var(--text-main); }
-        .btn-back { font-family: var(--font-code); font-size: 0.8rem; color: var(--gray-muted); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .btn-back { font-family: var(--font-code); font-size: 0.8rem; color: var(--gray-muted); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.3s; }
+        .btn-back:hover { color: var(--text-main); }
+        
+        .vault-btn { font-size: clamp(0.65rem, 1vw, 0.75rem); text-transform: uppercase; letter-spacing: 1px; color: var(--accent-gold); background: none; border: none; border-bottom: 1px solid var(--accent-gold); padding-bottom: 2px; transition: opacity 0.3s ease; font-weight: 600; cursor: pointer; }
+        .vault-btn:hover { opacity: 0.7; }
 
-        .vault-header { padding: clamp(150px, 20vh, 200px) var(--spacing-container) 80px var(--spacing-container); max-width: 1400px; margin: 0 auto; border-bottom: 1px solid var(--border-subtle); opacity: 0; transform: translateY(30px); }
+        .vault-header { padding: clamp(150px, 20vh, 200px) var(--spacing-container) 60px var(--spacing-container); max-width: 1400px; margin: 0 auto; border-bottom: 1px solid var(--border-subtle); opacity: 0; transform: translateY(30px); }
         .vault-header h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.5rem, 5vw, 5rem); font-weight: 800; letter-spacing: -1px; line-height: 1.1; margin-bottom: 20px; }
         .vault-header h1 span { color: var(--accent-gold); }
         .vault-meta { font-family: var(--font-code); font-size: 0.85rem; color: var(--gray-muted); display: flex; gap: 40px; flex-wrap: wrap; }
 
-        .gallery-container { padding: 80px var(--spacing-container); max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(20px, 3vw, 30px); align-items: start; }
-        .frame { position: relative; background: var(--text-main); overflow: hidden; opacity: 0; transform: translateY(50px); }
-        .frame-large { grid-column: span 12; aspect-ratio: 2.35 / 1; }
-        .frame-tall { grid-column: span 5; aspect-ratio: 3 / 4; }
-        .frame-square { grid-column: span 7; aspect-ratio: 4 / 3; }
-        .frame img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.2); opacity: 0.8; transition: filter 0.8s ease, transform 1.2s ease; }
-        .frame:hover img { filter: grayscale(0%) contrast(1); opacity: 1; transform: scale(1.03); }
-        .frame-ui { position: absolute; top: 20px; left: 20px; right: 20px; bottom: 20px; pointer-events: none; display: flex; flex-direction: column; justify-content: space-between; opacity: 0; transition: opacity 0.4s ease; }
-        .frame:hover .frame-ui { opacity: 1; }
-        .ui-top { display: flex; justify-content: space-between; font-family: var(--font-code); font-size: 0.75rem; color: #FFFFFF; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
-        .ui-bottom { font-family: 'Syne', sans-serif; font-size: clamp(1rem, 1.5vw, 1.5rem); font-weight: 700; color: #FFFFFF; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .archive-laboratory { padding: 60px var(--spacing-container) 100px var(--spacing-container); max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 80px; }
+        .section-subtitle { font-family: 'Syne', sans-serif; font-size: clamp(1.5rem, 2vw, 2rem); font-weight: 800; margin-bottom: 40px; border-left: 3px solid var(--accent-gold); padding-left: 15px; }
 
-        @media (max-width: 900px) { .frame-tall, .frame-square { grid-column: span 12; aspect-ratio: 16 / 9; } .frame-large { aspect-ratio: 16 / 9; } }
-        @media (max-width: 600px) { header { flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links { width: 100%; justify-content: space-between; } }
+        /* --- MÓDULO PRESENTACIONES (VIDEOS EN RETÍCULA) --- */
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 40px; opacity: 0; transform: translateY(40px); }
+        .video-showcase { display: flex; flex-direction: column; gap: 15px; }
+        .video-wrapper { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 1px solid var(--border-subtle); background: #000; transition: transform 0.4s ease; }
+        .video-wrapper:hover { transform: translateY(-5px); box-shadow: 0 30px 60px rgba(197, 160, 89, 0.15); border-color: var(--accent-gold); }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        
+        .video-caption { font-family: var(--font-code); font-size: 0.8rem; color: var(--gray-muted); letter-spacing: 1px; text-transform: uppercase; }
+        .video-caption span { color: var(--text-main); font-weight: 800; font-family: 'Syne', sans-serif; font-size: 1.2rem; display: block; margin-bottom: 5px; letter-spacing: -0.5px; text-transform: none; }
+
+        /* --- MÓDULO POSTALES (FOTOGRAFÍAS CINEMATOGRÁFICAS) --- */
+        .frame-container { display: flex; flex-direction: column; gap: 40px; }
+        .film-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background-color: var(--surface-card); overflow: hidden; border: 1px solid var(--border-subtle); opacity: 0; transform: translateY(50px); border-radius: 4px; }
+        @media (min-width: 900px) { .film-frame { aspect-ratio: 2.35 / 1; } } /* Proporción Cinematográfica Ultrawide en Escritorio */
+        
+        /* El filtro grayscale elimina distracciones y unifica el portafolio, el hover revela el color real */
+        .film-frame img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(110%) brightness(0.9); transition: filter 0.8s ease, transform 10s linear; }
+        .film-frame:hover img { filter: grayscale(0%) contrast(100%) brightness(1); transform: scale(1.03); }
+
+        /* MODAL CONTÁCTANOS (SINCRONIZADO) */
+        .vault-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(15px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; padding: 20px; }
+        .vault-modal.active { opacity: 1; pointer-events: auto; }
+        
+        .vault-content { background: var(--surface-card); border: 1px solid var(--border-subtle); box-shadow: 0 30px 60px rgba(0,0,0,0.15); padding: clamp(30px, 5vw, 50px); max-width: 520px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative; opacity: 0; transform: scale(0.95); transition: opacity 0.4s ease, transform 0.4s ease; border-radius: 4px; }
+        .vault-content::-webkit-scrollbar { width: 4px; }
+        .vault-content::-webkit-scrollbar-thumb { background: var(--accent-gold); border-radius: 4px; }
+        .vault-modal.active .vault-content { opacity: 1; transform: scale(1); }
+
+        .close-vault { position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--gray-muted); font-size: 1.5rem; cursor: pointer; transition: color 0.3s; z-index: 10; }
+        .close-vault:hover { color: var(--text-main); }
+
+        .modal-logo { max-width: 250px; width: 100%; height: auto; object-fit: contain; margin: 0 auto 25px auto; display: block; }
+        .modal-title { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -0.5px; margin-bottom: 12px; color: var(--text-main); display: block; text-align: center; width: 100%; margin-left: auto; margin-right: auto; }
+        .modal-subtitle { font-size: 0.85rem; color: var(--gray-muted); line-height: 1.6; margin-bottom: 30px; max-width: 350px; margin-left: auto; margin-right: auto; text-align: center; }
+
+        .contact-group { margin-bottom: 20px; text-align: center; }
+        .contact-label { font-family: var(--font-code); font-size: 0.7rem; color: var(--gray-muted); text-transform: uppercase; margin-bottom: 4px; }
+        .contact-data { font-size: 1.05rem; color: var(--text-main); font-weight: 600; text-decoration: none; transition: color 0.3s; display: block; }
+        .contact-data:hover { color: var(--accent-gold); }
+
+        .cta-main { display: block; width: 100%; background-color: var(--text-main); color: var(--bg-base); border: none; padding: 16px; font-family: 'Syne', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; transition: all 0.4s ease; margin-top: 35px; margin-bottom: 35px; text-decoration: none; border-radius: 2px; font-size: 0.75rem; text-align: center; }
+        .cta-main:hover { background-color: var(--accent-gold); color: var(--text-main); box-shadow: 0 10px 25px rgba(197, 160, 89, 0.3); }
+
+        .modal-socials { display: flex; justify-content: center; gap: 15px; border-top: 1px solid var(--border-subtle); padding-top: 20px; flex-wrap: wrap; text-align: center; }
+        .modal-social-link { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-muted); text-decoration: none; transition: color 0.3s; font-weight: 600; }
+        .modal-social-link:hover { color: var(--accent-gold); }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 12px; align-items: flex-start; padding: 15px var(--spacing-container); }
+            .logo-text { display: none; }
+            .logo-img { display: block; }
+            .nav-links { width: 100%; justify-content: flex-end; gap: 15px; flex-wrap: wrap; position: static; transform: none; }
+            .vault-content { padding: 30px 20px; }
+            .modal-logo { max-width: 180px; }
+            .video-grid { grid-template-columns: 1fr; } /* En móvil se apilan perfectamente uno sobre otro */
+        }
     </style>
 </head>
 <body>
     <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
 
     <header>
-        <a href="index.html" class="logo">EPIFANIO COLLANTE</a>
+        <a href="index.html" class="logo-text">EPIFANIO COLLANTE</a>
+        <a href="index.html"><img src="image_414963.png" alt="Epifanio Collante Logo" class="logo-img"></a>
         <div class="nav-links">
             <a href="index.html" class="btn-back">← UMBRAL</a>
             <a href="acerca.html" class="nav-link">Acerca de mí</a>
             <a href="archivo.html" class="nav-link active">Archivo</a>
             <a href="discografia.html" class="nav-link">Discografía</a>
+            <button class="vault-btn" onclick="toggleVault()">Contáctanos</button>
         </div>
     </header>
 
     <section class="vault-header">
-        <h1>Archivo <span>Fotográfico.</span></h1>
+        <h1>Archivo <span>Multimedia.</span></h1>
         <div class="vault-meta">
-            <span>REGISTROS: 04 ACTIVOS</span>
-            <span>FORMATO: DIRECTO ESCENARIO</span>
+            <span>REGISTROS: ACTIVOS</span>
+            <span>FORMATO: DIRECTO ESCENARIO / PRENSA</span>
         </div>
     </section>
 
-    <main class="gallery-container">
-        <!-- Fotograma 1: Imagen de Tarima en Vivo -->
-        <div class="frame frame-large">
-            <img src="image_3fe847.jpg" alt="Epifanio Collante Tarima">
-            <div class="frame-ui"><div class="ui-top"><span>SCENE 01</span><span>LIVE STAGE</span></div><div class="ui-bottom">LA FUERZA DEL VALLENATO.</div></div>
+    <main class="archive-laboratory">
+        
+        <!-- SECCIÓN 1: PRESENTACIONES (YOUTUBE BLINDADO) -->
+        <div>
+            <h2 class="section-subtitle">Presentaciones</h2>
+            <div class="video-grid">
+                
+                <!-- VIDEO 1 -->
+                <div class="video-showcase">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube-nocookie.com/embed/LqIomaM5zM8?rel=0&modestbranding=1" title="Presentación Epifanio Collante" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-caption">
+                        <span>Registro de Escenario I</span>
+                        Interpretación en Directo
+                    </div>
+                </div>
+
+                <!-- VIDEO 2 -->
+                <div class="video-showcase">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube-nocookie.com/embed/n6UAPJQ6vZE?rel=0&modestbranding=1" title="Presentación Epifanio Collante" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-caption">
+                        <span>Registro de Escenario II</span>
+                        Interpretación en Directo
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <!-- Fotograma 2: Concierto / Luces -->
-        <div class="frame frame-tall">
-            <img src="image_3fe84b.jpg" alt="Concierto Epifanio">
-            <div class="frame-ui"><div class="ui-top"><span>SCENE 02</span><span>CONCERT RAW</span></div><div class="ui-bottom">CONEXIÓN ABSOLUTA.</div></div>
+
+        <!-- SECCIÓN 2: POSTALES (FOTOGRAFÍAS CINEMATOGRÁFICAS) -->
+        <div>
+            <h2 class="section-subtitle" style="margin-top: 40px;">Postales</h2>
+            <div class="frame-container">
+                
+                <!-- PRENSA: Radio Nacional -->
+                <div class="film-frame">
+                    <img src="image_4ee7eb.jpg" alt="Entrevista en Radio Nacional de Colombia - Epifanio Collante">
+                </div>
+                
+                <!-- PRODUCCIÓN: Estudio de Grabación -->
+                <div class="film-frame">
+                    <img src="image_4ee806.jpg" alt="Epifanio Collante en Estudio de Grabación">
+                </div>
+
+                <!-- REGISTRO PREVIO 1 -->
+                <div class="film-frame">
+                    <img src="image_3fe847.jpg" alt="Epifanio Collante en Tarima">
+                </div>
+
+                <!-- REGISTRO PREVIO 2 -->
+                <div class="film-frame">
+                    <img src="image_3fe84b.jpg" alt="Concierto en Vivo Epifanio Collante">
+                </div>
+
+            </div>
         </div>
-        <!-- Fotograma 3: Escenario y Luces Rojas -->
-        <div class="frame frame-square">
-            <img src="image_3fe865.jpg" alt="Escenario Gira">
-            <div class="frame-ui"><div class="ui-top"><span>SCENE 03</span><span>TOUR SETUP</span></div><div class="ui-bottom">EL RITMO DE LA SABANA.</div></div>
-        </div>
+
     </main>
+
+    <!-- MODAL THE VAULT -->
+    <div class="vault-modal" id="vaultModal">
+        <div class="vault-content">
+            <button class="close-vault" onclick="toggleVault()">&times;</button>
+            <img src="image_414963.png" alt="Epifanio Collante Logo" class="modal-logo">
+            <h2 class="modal-title">CONTÁCTANOS</h2>
+            <p class="modal-subtitle">Gestión de Contrataciones para Eventos, Festivales y Eventos Privados.</p>
+            <div class="contact-group">
+                <p class="contact-label">Teléfono / WhatsApp</p>
+                <a href="tel:+573158299357" class="contact-data">+57 315 829 9357</a>
+            </div>
+            <div class="contact-group">
+                <p class="contact-label">Correo Electrónico</p>
+                <a href="mailto:angelica.collanteperez@gmail.com" class="contact-data">angelica.collanteperez@gmail.com</a>
+            </div>
+            <a href="mailto:angelica.collanteperez@gmail.com?subject=Solicitud de Contratación - Epifanio Collante" class="cta-main">SOLICITAR PROPUESTA</a>
+            <div class="modal-socials">
+                <a href="https://www.instagram.com/epifaniocollante" target="_blank" class="modal-social-link">Instagram</a>
+                <a href="https://youtube.com/@musico415" target="_blank" class="modal-social-link">YouTube</a>
+                <a href="https://www.facebook.com/share/1EnpsgvLqo/" target="_blank" class="modal-social-link">Facebook</a>
+            </div>
+        </div>
+    </div>
 
     <script>
         window.onscroll = function() {
@@ -93,9 +216,15 @@
             document.getElementById("myBar").style.width = (winScroll / height) * 100 + "%";
         };
 
-        gsap.to(".vault-header", { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" });
-        gsap.utils.toArray('.frame').forEach((frame, i) => {
-            gsap.to(frame, { scrollTrigger: { trigger: frame, start: "top 85%" }, opacity: 1, y: 0, duration: 1, ease: "power4.out", delay: i * 0.15 });
+        function toggleVault() {
+            document.getElementById('vaultModal').classList.toggle('active');
+        }
+
+        gsap.to(".vault-header", { opacity: 1, y: 0, duration: 1.2 });
+        gsap.to(".video-grid", { scrollTrigger: { trigger: ".video-grid", start: "top 85%" }, opacity: 1, y: 0, duration: 1.2, ease: "power3.out" });
+        
+        gsap.utils.toArray('.film-frame').forEach((frame, i) => { 
+            gsap.to(frame, { scrollTrigger: { trigger: frame, start: "top 85%" }, opacity: 1, y: 0, duration: 1.2, delay: i * 0.15 }); 
         });
     </script>
 </body>
