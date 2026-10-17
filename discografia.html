@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discografía | Epifanio Collante</title>
+    <title>Discografía y Repertorio | Epifanio Collante</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,21 +19,30 @@
         .progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 3px; background: transparent; z-index: 1000; }
         .progress-bar { height: 100%; background: var(--accent-gold); width: 0%; transition: width 0.1s ease; }
 
+        /* HEADER ASIMÉTRICO (SINCRONIZADO) */
         header { position: fixed; top: 0; left: 0; width: 100%; padding: clamp(15px, 3vh, 30px) var(--spacing-container); display: flex; justify-content: space-between; align-items: center; z-index: 100; background: linear-gradient(to bottom, rgba(255,255,255,0.98), rgba(255,255,255,0.85)); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-subtle); }
-        .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(0.85rem, 1.8vw, 1.1rem); letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-main); text-decoration: none; }
+        .logo-text { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(0.85rem, 1.8vw, 1.1rem); letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-main); text-decoration: none; display: block; z-index: 10; }
+        .logo-img { display: none; max-height: 55px; width: auto; object-fit: contain; z-index: 10; }
+        
         .nav-links { display: flex; gap: clamp(10px, 2.5vw, 30px); align-items: center; }
-        .nav-link { font-size: clamp(0.65rem, 1vw, 0.75rem); text-transform: uppercase; letter-spacing: 1px; color: var(--gray-muted); text-decoration: none; font-weight: 500; }
+        .nav-link { font-size: clamp(0.65rem, 1vw, 0.75rem); text-transform: uppercase; letter-spacing: 1px; color: var(--gray-muted); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+        .nav-link:hover { color: var(--text-main); }
         .nav-link.active { color: var(--text-main); border-bottom: 1px solid var(--text-main); }
-        .btn-back { font-family: var(--font-code); font-size: 0.8rem; color: var(--gray-muted); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .btn-back { font-family: var(--font-code); font-size: 0.8rem; color: var(--gray-muted); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.3s; }
+        .btn-back:hover { color: var(--text-main); }
+        
+        .vault-btn { font-size: clamp(0.65rem, 1vw, 0.75rem); text-transform: uppercase; letter-spacing: 1px; color: var(--accent-gold); background: none; border: none; border-bottom: 1px solid var(--accent-gold); padding-bottom: 2px; transition: opacity 0.3s ease; font-weight: 600; cursor: pointer; }
+        .vault-btn:hover { opacity: 0.7; }
 
         .vault-header { padding: clamp(150px, 20vh, 200px) var(--spacing-container) 60px var(--spacing-container); max-width: 1400px; margin: 0 auto; border-bottom: 1px solid var(--border-subtle); opacity: 0; transform: translateY(30px); }
         .vault-header h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.5rem, 5vw, 5rem); font-weight: 800; letter-spacing: -1px; line-height: 1.1; margin-bottom: 20px; }
         .vault-header h1 span { color: var(--accent-gold); }
         .vault-meta { font-family: var(--font-code); font-size: 0.85rem; color: var(--gray-muted); display: flex; gap: 40px; flex-wrap: wrap; }
 
-        .audio-laboratory { padding: 60px var(--spacing-container); max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 60px; }
+        .audio-laboratory { padding: 60px var(--spacing-container) 100px var(--spacing-container); max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 80px; }
         .section-subtitle { font-family: 'Syne', sans-serif; font-size: clamp(1.5rem, 2vw, 2rem); font-weight: 800; margin-bottom: 30px; border-left: 3px solid var(--accent-gold); padding-left: 15px; }
 
+        /* MÓDULO DEL ÁLBUM ORIGINAL */
         .audio-module { display: grid; grid-template-columns: 1fr 1.5fr; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 4px; overflow: hidden; opacity: 0; transform: translateY(40px); transition: transform 0.4s ease, border-color 0.4s ease; }
         .audio-module:hover { transform: translateY(-5px); border-color: var(--accent-gold); }
         .module-info { padding: clamp(30px, 5vw, 60px); border-right: 1px solid var(--border-subtle); display: flex; flex-direction: column; justify-content: center; }
@@ -48,86 +57,260 @@
         .audio-module.playing .wave-bar { background: var(--accent-gold); animation: equalize 1s infinite alternate; }
         @keyframes equalize { 0% { height: 2px; } 100% { height: 100%; } }
         
-        .play-btn { position: absolute; bottom: 40px; right: 40px; width: 60px; height: 60px; border-radius: 50%; background: var(--bg-base); border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+        .play-btn { position: absolute; bottom: 40px; right: 40px; width: 60px; height: 60px; border-radius: 50%; background: var(--bg-base); border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.3s; }
         .play-btn::after { content: ''; width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 14px solid var(--text-main); margin-left: 4px; }
         .audio-module.playing .play-btn { background: var(--accent-gold); }
 
+        /* REPERTORIO DE COVERS (SISTEMA DE ACORDEÓN) */
         .covers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
         .cover-card { background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 4px; overflow: hidden; opacity: 0; transform: translateY(30px); transition: all 0.3s ease; cursor: pointer; }
         .cover-card:hover { border-color: var(--accent-gold); transform: translateY(-3px); }
-        .cover-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; }
-        .cover-artist { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; }
+        .cover-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; background: #FAFAFA; }
+        .cover-artist { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text-main); }
         .cover-count { font-family: var(--font-code); font-size: 0.75rem; color: var(--accent-gold); background: rgba(197, 160, 89, 0.1); padding: 4px 8px; border-radius: 2px; }
-        .cover-songs { max-height: 0; overflow: hidden; background: #FFFFFF; transition: max-height 0.4s ease, padding 0.3s ease; padding: 0 20px; }
-        .cover-card.active .cover-songs { max-height: 400px; padding: 20px; border-top: 1px solid var(--border-subtle); overflow-y: auto; }
-        .cover-songs ul { list-style: none; font-family: var(--font-code); font-size: 0.85rem; color: var(--gray-muted); display: flex; flex-direction: column; gap: 8px; }
-        .cover-songs li::before { content: '— '; color: var(--accent-gold); }
+        .cover-songs { max-height: 0; overflow: hidden; background: #FFFFFF; transition: max-height 0.5s ease, padding 0.3s ease; padding: 0 20px; }
+        .cover-card.active .cover-songs { max-height: 600px; padding: 20px; border-top: 1px solid var(--border-subtle); overflow-y: auto; }
+        
+        /* Estilos de la lista interior */
+        .cover-songs ul { list-style: none; font-family: var(--font-code); font-size: 0.85rem; color: var(--gray-muted); display: flex; flex-direction: column; gap: 10px; }
+        .cover-songs li { display: flex; gap: 8px; line-height: 1.4; }
+        .cover-songs li::before { content: '■'; color: var(--accent-gold); font-size: 0.6rem; margin-top: 3px; }
+        .song-meta { display: block; font-size: 0.7rem; color: #AAAAAA; margin-top: 2px; }
+
+        /* MODAL CONTÁCTANOS (SINCRONIZADO) */
+        .vault-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(15px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; padding: 20px; }
+        .vault-modal.active { opacity: 1; pointer-events: auto; }
+        
+        .vault-content { background: var(--surface-card); border: 1px solid var(--border-subtle); box-shadow: 0 30px 60px rgba(0,0,0,0.15); padding: clamp(30px, 5vw, 50px); max-width: 520px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative; opacity: 0; transform: scale(0.95); transition: opacity 0.4s ease, transform 0.4s ease; border-radius: 4px; }
+        .vault-content::-webkit-scrollbar { width: 4px; }
+        .vault-content::-webkit-scrollbar-thumb { background: var(--accent-gold); border-radius: 4px; }
+        .vault-modal.active .vault-content { opacity: 1; transform: scale(1); }
+
+        .close-vault { position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--gray-muted); font-size: 1.5rem; cursor: pointer; transition: color 0.3s; z-index: 10; }
+        .close-vault:hover { color: var(--text-main); }
+
+        .modal-logo { max-width: 250px; width: 100%; height: auto; object-fit: contain; margin: 0 auto 25px auto; display: block; }
+        .modal-title { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -0.5px; margin-bottom: 12px; color: var(--text-main); display: block; text-align: center; width: 100%; margin-left: auto; margin-right: auto; }
+        .modal-subtitle { font-size: 0.85rem; color: var(--gray-muted); line-height: 1.6; margin-bottom: 30px; max-width: 350px; margin-left: auto; margin-right: auto; text-align: center; }
+
+        .contact-group { margin-bottom: 20px; text-align: center; }
+        .contact-label { font-family: var(--font-code); font-size: 0.7rem; color: var(--gray-muted); text-transform: uppercase; margin-bottom: 4px; }
+        .contact-data { font-size: 1.05rem; color: var(--text-main); font-weight: 600; text-decoration: none; transition: color 0.3s; display: block; }
+        .contact-data:hover { color: var(--accent-gold); }
+
+        .cta-main { display: block; width: 100%; background-color: var(--text-main); color: var(--bg-base); border: none; padding: 16px; font-family: 'Syne', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; transition: all 0.4s ease; margin-top: 35px; margin-bottom: 35px; text-decoration: none; border-radius: 2px; font-size: 0.75rem; text-align: center; }
+        .cta-main:hover { background-color: var(--accent-gold); color: var(--text-main); box-shadow: 0 10px 25px rgba(197, 160, 89, 0.3); }
+
+        .modal-socials { display: flex; justify-content: center; gap: 15px; border-top: 1px solid var(--border-subtle); padding-top: 20px; flex-wrap: wrap; text-align: center; }
+        .modal-social-link { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-muted); text-decoration: none; transition: color 0.3s; font-weight: 600; }
+        .modal-social-link:hover { color: var(--accent-gold); }
 
         @media (max-width: 900px) { .audio-module { grid-template-columns: 1fr; } .module-info { border-right: none; border-bottom: 1px solid var(--border-subtle); } }
-        @media (max-width: 600px) { header { flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links { width: 100%; justify-content: space-between; } }
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 12px; align-items: flex-start; padding: 15px var(--spacing-container); }
+            .logo-text { display: none; }
+            .logo-img { display: block; }
+            .nav-links { width: 100%; justify-content: space-between; position: static; transform: none; }
+            .vault-content { padding: 30px 20px; }
+            .modal-logo { max-width: 180px; }
+        }
     </style>
 </head>
 <body>
     <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
 
     <header>
-        <a href="index.html" class="logo">EPIFANIO COLLANTE</a>
+        <a href="index.html" class="logo-text">EPIFANIO COLLANTE</a>
+        <a href="index.html"><img src="image_414963.png" alt="Epifanio Collante Logo" class="logo-img"></a>
         <div class="nav-links">
             <a href="index.html" class="btn-back">← UMBRAL</a>
             <a href="acerca.html" class="nav-link">Acerca de mí</a>
             <a href="archivo.html" class="nav-link">Archivo</a>
             <a href="discografia.html" class="nav-link active">Discografía</a>
+            <button class="vault-btn" onclick="toggleVault()">Contáctanos</button>
         </div>
     </header>
 
     <section class="vault-header">
         <h1>Archivo de <span>Discografía.</span></h1>
-        <div class="vault-meta"><span>AUTORÍA PROPIA: 01 ÁLBUM</span><span>COVERS: 44 CLÁSICOS</span></div>
+        <div class="vault-meta">
+            <span>ÁLBUM OFICIAL: 01</span>
+            <span>REPERTORIO EN VIVO: 44 CLÁSICOS</span>
+        </div>
     </section>
 
     <main class="audio-laboratory">
-        <h2 class="section-subtitle">Álbum Oficial — Autoría</h2>
-        <article class="audio-module" id="module1">
-            <div class="module-info">
-                <h2 class="track-title">Firme Contigo</h2>
-                <ul class="track-list"><li>01. Firme Contigo</li><li>02. Por Buen Camino</li><li>03. Tus Engaños</li><li>04. Me Ilusioné Contigo</li></ul>
-            </div>
-            <div class="module-engine">
-                <span style="color:white; font-family:var(--font-code); font-size:0.8rem; margin-bottom: 20px;">TELEMETRÍA DE STEMS</span>
-                <div class="stems-container">
-                    <div class="stem-track"><span class="stem-label">ACORDEÓN</span><div class="stem-wave mid"></div></div>
-                    <div class="stem-track"><span class="stem-label">CAJA</span><div class="stem-wave bass"></div></div>
+        <!-- ÁLBUM ORIGINAL -->
+        <div>
+            <h2 class="section-subtitle">Álbum Oficial — Autoría</h2>
+            <article class="audio-module" id="module1">
+                <div class="module-info">
+                    <h2 class="track-title">Firme Contigo</h2>
+                    <ul class="track-list">
+                        <li>01. Firme Contigo</li>
+                        <li>02. Por Buen Camino</li>
+                        <li>03. Tus Engaños</li>
+                        <li>04. Me Ilusioné Contigo (Autoría Epifanio Collante)</li>
+                    </ul>
                 </div>
-                <button class="play-btn" onclick="togglePlay('module1')"></button>
-            </div>
-        </article>
+                <div class="module-engine">
+                    <span style="color:white; font-family:var(--font-code); font-size:0.8rem; margin-bottom: 20px;">TELEMETRÍA DE STEMS EN VIVO</span>
+                    <div class="stems-container">
+                        <div class="stem-track"><span class="stem-label">ACORDEÓN</span><div class="stem-wave mid"></div></div>
+                        <div class="stem-track"><span class="stem-label">CAJA</span><div class="stem-wave bass"></div></div>
+                    </div>
+                    <button class="play-btn" onclick="togglePlay('module1')"></button>
+                </div>
+            </article>
+        </div>
 
-        <div style="margin-top: 40px;">
-            <h2 class="section-subtitle">Genealogía Vallenata — Covers</h2>
+        <!-- REPERTORIO EN VIVO (LOS 44 TEMAS) -->
+        <div>
+            <h2 class="section-subtitle">Genealogía Vallenata — Repertorio de Escenario</h2>
             <div class="covers-grid">
+                
+                <!-- BINOMIO DE ORO -->
                 <div class="cover-card" onclick="toggleCover(this)">
-                    <div class="cover-header"><span class="cover-artist">Binomio de Oro</span><span class="cover-count">7 Temas</span></div>
-                    <div class="cover-songs"><ul><li>Si tu amor no vuelve</li><li>Osito dormilón</li><li>Cómo te olvido</li><li>Niña bonita</li><li>Dime cómo te olvido</li><li>Me vas a extrañar</li><li>Mi segunda vida</li></ul></div>
+                    <div class="cover-header"><span class="cover-artist">Binomio de Oro</span><span class="cover-count">10 Temas</span></div>
+                    <div class="cover-songs">
+                        <ul>
+                            <li><span>Si tu amor no vuelve</span></li>
+                            <li><span>Osito dormilón</span></li>
+                            <li><span>Cómo te olvido</span></li>
+                            <li><span>Niña bonita</span></li>
+                            <li><span>Dime cómo te olvido</span></li>
+                            <li><span>Me vas a extrañar</span></li>
+                            <li><span>Volvió el dolor</span></li>
+                            <li><span>Quiero que seas mi estrella</span></li>
+                            <li><span>Mi segunda vida</span></li>
+                            <li><span>El igueron <span class="song-meta">Rafael Orozco</span></span></li>
+                        </ul>
+                    </div>
                 </div>
+
+                <!-- LOS DIABLITOS -->
                 <div class="cover-card" onclick="toggleCover(this)">
-                    <div class="cover-header"><span class="cover-artist">Diomedes Díaz</span><span class="cover-count">4 Temas</span></div>
-                    <div class="cover-songs"><ul><li>La plata</li><li>Mi muchacho</li><li>La cana</li><li>Ahijado</li></ul></div>
+                    <div class="cover-header"><span class="cover-artist">Los Diablitos</span><span class="cover-count">5 Temas</span></div>
+                    <div class="cover-songs">
+                        <ul>
+                            <li><span>Que vuelva</span></li>
+                            <li><span>A besitos</span></li>
+                            <li><span>Busca un confidente</span></li>
+                            <li><span>Cuando casi te olvidaba</span></li>
+                            <li><span>Los caminos de la vida</span></li>
+                        </ul>
+                    </div>
                 </div>
+
+                <!-- SILVESTRE DANGOND -->
                 <div class="cover-card" onclick="toggleCover(this)">
                     <div class="cover-header"><span class="cover-artist">Silvestre Dangond</span><span class="cover-count">5 Temas</span></div>
-                    <div class="cover-songs"><ul><li>A blanco y negro</li><li>El Tao Tao</li><li>Por ser machista</li><li>Dile</li><li>Materialista</li></ul></div>
+                    <div class="cover-songs">
+                        <ul>
+                            <li><span>A blanco y negro</span></li>
+                            <li><span>El Tao Tao</span></li>
+                            <li><span>Por ser machista</span></li>
+                            <li><span>Dile</span></li>
+                            <li><span>Materialista</span></li>
+                        </ul>
+                    </div>
                 </div>
+
+                <!-- DIOMEDES DÍAZ -->
                 <div class="cover-card" onclick="toggleCover(this)">
-                    <div class="cover-header"><span class="cover-artist">Los Diablitos</span><span class="cover-count">6 Temas</span></div>
-                    <div class="cover-songs"><ul><li>Que vuelva</li><li>A besitos</li><li>Busca un confidente</li><li>Cuando casi te olvidaba</li><li>Los caminos de la vida</li></ul></div>
+                    <div class="cover-header"><span class="cover-artist">Diomedes Díaz</span><span class="cover-count">4 Temas</span></div>
+                    <div class="cover-songs">
+                        <ul>
+                            <li><span>La plata</span></li>
+                            <li><span>Mi muchacho</span></li>
+                            <li><span>La cana</span></li>
+                            <li><span>Ahijado</span></li>
+                        </ul>
+                    </div>
                 </div>
+
+                <!-- JORGE CELEDÓN -->
                 <div class="cover-card" onclick="toggleCover(this)">
                     <div class="cover-header"><span class="cover-artist">Jorge Celedón</span><span class="cover-count">4 Temas</span></div>
-                    <div class="cover-songs"><ul><li>Ay ombe</li><li>Cuatro rosas</li><li>Parranda en el cafetal</li><li>Te haré feliz</li></ul></div>
+                    <div class="cover-songs">
+                        <ul>
+                            <li><span>Ay ombe</span></li>
+                            <li><span>Cuatro rosas</span></li>
+                            <li><span>Parranda en el cafetal</span></li>
+                            <li><span>Te haré feliz</span></li>
+                        </ul>
+                    </div>
                 </div>
+
+                <!-- JEAN CARLOS CENTENO -->
+                <div class="cover-card" onclick="toggleCover(this)">
+                    <div class="cover-header"><span class="cover-artist">J. Carlos Centeno</span><span class="cover-count">2 Temas</span></div>
+                    <div class="cover-songs">
+                        <ul>
+                            <li><span>Ayer y hoy</span></li>
+                            <li><span>Que me perdone</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- CLÚSTER: LEYENDAS Y CLÁSICOS -->
+                <div class="cover-card" onclick="toggleCover(this)">
+                    <div class="cover-header"><span class="cover-artist">Leyendas & Clásicos</span><span class="cover-count">7 Temas</span></div>
+                    <div class="cover-songs">
+                        <ul>
+                            <li><span>Alicia dorada <span class="song-meta">Alejandro Durán</span></span></li>
+                            <li><span>El santo cachón <span class="song-meta">Los Embajadores</span></span></li>
+                            <li><span>Cambia por favor <span class="song-meta">Ivan Villazón</span></span></li>
+                            <li><span>Tierra mala <span class="song-meta">Los Chiches</span></span></li>
+                            <li><span>Mi diosa humana <span class="song-meta">Miguel Morales</span></span></li>
+                            <li><span>Muero por verla <span class="song-meta">Luis Mateus</span></span></li>
+                            <li><span>Cómo quema el frío <span class="song-meta">José Carrascal</span></span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- CLÚSTER: NUEVA ERA Y ROMÁNTICOS -->
+                <div class="cover-card" onclick="toggleCover(this)">
+                    <div class="cover-header"><span class="cover-artist">Nueva Era</span><span class="cover-count">6 Temas</span></div>
+                    <div class="cover-songs">
+                        <ul>
+                            <li><span>Inevitable <span class="song-meta">Elder Dayan</span></span></li>
+                            <li><span>El amor más grande del planeta <span class="song-meta">Felipe Peláez</span></span></li>
+                            <li><span>Acuérdate <span class="song-meta">Hebert Vargas</span></span></li>
+                            <li><span>Primera azúl <span class="song-meta">Nelson Velázquez</span></span></li>
+                            <li><span>Obsesión <span class="song-meta">Peter Manjarrés</span></span></li>
+                            <li><span>El venao <span class="song-meta">Mono Zabaleta</span></span></li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </div>
     </main>
+
+    <!-- MODAL THE VAULT -->
+    <div class="vault-modal" id="vaultModal">
+        <div class="vault-content">
+            <button class="close-vault" onclick="toggleVault()">&times;</button>
+            <img src="image_414963.png" alt="Epifanio Collante Logo" class="modal-logo">
+            <h2 class="modal-title">CONTÁCTANOS</h2>
+            <p class="modal-subtitle">Gestión de Contrataciones para Eventos, Festivales y Eventos Privados.</p>
+            <div class="contact-group">
+                <p class="contact-label">Teléfono / WhatsApp</p>
+                <a href="tel:+573158299357" class="contact-data">+57 315 829 9357</a>
+            </div>
+            <div class="contact-group">
+                <p class="contact-label">Correo Electrónico</p>
+                <a href="mailto:angelica.collanteperez@gmail.com" class="contact-data">angelica.collanteperez@gmail.com</a>
+            </div>
+            <a href="mailto:angelica.collanteperez@gmail.com?subject=Solicitud de Contratación - Epifanio Collante" class="cta-main">SOLICITAR PROPUESTA</a>
+            <div class="modal-socials">
+                <a href="https://www.instagram.com/epifaniocollante" target="_blank" class="modal-social-link">Instagram</a>
+                <a href="https://youtube.com/@musico415" target="_blank" class="modal-social-link">YouTube</a>
+                <a href="https://www.facebook.com/share/1EnpsgvLqo/" target="_blank" class="modal-social-link">Facebook</a>
+            </div>
+        </div>
+    </div>
 
     <script>
         window.onscroll = function() {
@@ -148,9 +331,14 @@
         buildWaves();
 
         function togglePlay(id) { document.getElementById(id).classList.toggle('playing'); }
+        
         function toggleCover(card) {
             document.querySelectorAll('.cover-card').forEach(c => { if (c !== card) c.classList.remove('active'); });
             card.classList.toggle('active');
+        }
+
+        function toggleVault() {
+            document.getElementById('vaultModal').classList.toggle('active');
         }
 
         gsap.to(".vault-header", { opacity: 1, y: 0, duration: 1.2 });
