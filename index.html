@@ -45,8 +45,20 @@
         .vault-btn { font-size: clamp(0.65rem, 1vw, 0.75rem); text-transform: uppercase; letter-spacing: 1px; color: var(--accent-gold); background: none; border: none; border-bottom: 1px solid var(--accent-gold); padding-bottom: 2px; transition: opacity 0.3s ease; font-weight: 600; cursor: pointer; }
         .vault-btn:hover { opacity: 0.7; }
 
-        /* SECCIÓN HERO INMERSIVA */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 var(--spacing-container); position: relative; z-index: 1; }
+        /* --- SECCIÓN HERO (REDISEÑO CINEMATOGRÁFICO: TEXTO ABAJO, ROSTROS LIBRES) --- */
+        .hero { 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            /* ANCLAJE INFERIOR: El texto ahora descansa en la parte baja de la pantalla */
+            justify-content: flex-end; 
+            align-items: center; 
+            text-align: center; 
+            /* Relleno inferior para que no quede pegado al borde */
+            padding: 0 var(--spacing-container) 15vh var(--spacing-container); 
+            position: relative; 
+            z-index: 1; 
+        }
         
         .hero::before {
             content: '';
@@ -64,9 +76,31 @@
             transition: all 0.3s ease;
         }
 
-        .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 4.2rem); font-weight: 800; line-height: 1.2; max-width: 1100px; margin-bottom: 24px; letter-spacing: -0.5px; color: var(--text-main); opacity: 0; transform: translateY(40px); }
+        /* TIPOGRAFÍA REDUCIDA Y SOFISTICADA */
+        .hero h1 { 
+            font-family: 'Syne', sans-serif; 
+            /* Tamaño reducido: de 4.2rem máximos bajamos a 3.2rem */
+            font-size: clamp(1.5rem, 3.2vw, 3.2rem); 
+            font-weight: 800; 
+            line-height: 1.2; 
+            max-width: 950px; /* Caja de texto más contenida */
+            margin-bottom: 20px; 
+            letter-spacing: -0.5px; 
+            color: var(--text-main); 
+            opacity: 0; 
+            transform: translateY(40px); 
+        }
         .hero h1 span { color: var(--accent-gold); }
-        .hero p { font-size: clamp(0.8rem, 1.1vw, 1rem); color: var(--gray-muted); font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0; transform: translateY(30px); }
+        .hero p { 
+            /* Subtítulo también reducido proporcionalmente */
+            font-size: clamp(0.75rem, 1vw, 0.9rem); 
+            color: var(--gray-muted); 
+            font-weight: 500; 
+            letter-spacing: 1.5px; 
+            text-transform: uppercase; 
+            opacity: 0; 
+            transform: translateY(30px); 
+        }
         
         /* RESTO DE SECCIONES */
         .section-about { padding: var(--spacing-section) var(--spacing-container); max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); background: var(--bg-base); }
@@ -141,19 +175,15 @@
         .action-link { display: inline-block; margin-top: 25px; font-family: 'Syne', sans-serif; font-weight: 700; color: var(--text-main); text-decoration: none; border-bottom: 2px solid var(--accent-gold); padding-bottom: 2px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; transition: opacity 0.3s; }
         .action-link:hover { opacity: 0.7; }
 
-        /* --- MEDIA QUERIES PARA MOBILE Y IPAD (AQUÍ ESTÁ LA MAGIA DEL REDIMENSIONAMIENTO) --- */
+        /* --- MEDIA QUERIES --- */
         
-        /* Ajuste para iPad / Tablets y Móviles */
         @media (max-width: 1024px) {
             .hero::before { 
-                /* 1. Destruimos el bug de iOS Safari quitando el fixed */
                 background-attachment: scroll; 
-                /* 2. Reubicamos el foco visual para que los rostros no se corten */
                 background-position: center 20%; 
             }
         }
 
-        /* Ajuste específico para Teléfonos (Layout) */
         @media (max-width: 768px) {
             header { flex-direction: column; gap: 12px; align-items: flex-start; padding: 15px var(--spacing-container); }
             .logo-text { display: none; }
@@ -161,7 +191,8 @@
             
             .nav-links { width: 100%; justify-content: flex-end; gap: 15px; flex-wrap: wrap; position: static; transform: none; }
             
-            .hero { padding-top: 60px; }
+            /* En móvil, aseguramos que el texto quede abajo pero con suficiente respiro de la pantalla superior */
+            .hero { padding-top: 100px; padding-bottom: 10vh; justify-content: flex-end; }
             
             .vault-content { padding: 30px 20px; }
             .modal-logo { max-width: 180px; }
@@ -273,42 +304,4 @@
             <div class="modal-socials">
                 <a href="https://www.instagram.com/epifaniocollante" target="_blank" class="modal-social-link">Instagram</a>
                 <a href="https://youtube.com/@musico415" target="_blank" class="modal-social-link">YouTube</a>
-                <a href="https://www.facebook.com/share/1EnpsgvLqo/" target="_blank" class="modal-social-link">Facebook</a>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function toggleVault() {
-            const modal = document.getElementById('vaultModal');
-            modal.classList.toggle('active');
-        }
-
-        window.onscroll = function() {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            document.getElementById("myBar").style.width = (winScroll / height) * 100 + "%";
-        };
-
-        const termInput = document.getElementById('termInput');
-        const termOutput = document.getElementById('termOutput');
-        termInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const command = this.value.toLowerCase().trim();
-                this.value = '';
-                if (command === 'help' || command === 'contacto') { termOutput.innerHTML = "> <b>Gestión:</b> Angélica Collante<br> - Teléfono: +57 315 829 9357"; } 
-                else if (command === 'status') { termOutput.innerHTML = "> <span class='success'>ARTISTA DISPONIBLE.</span>"; } 
-                else if (command !== '') { termOutput.innerHTML = "> <span class='error'>ERR: Comando no reconocido.</span> Escriba 'contacto'."; }
-            }
-        });
-
-        gsap.to("header", { opacity: 1, duration: 1, ease: "power3.out" });
-        gsap.to(".hero h1", { opacity: 1, y: 0, duration: 1.2, delay: 0.3, ease: "power4.out" });
-        gsap.to(".hero p", { opacity: 1, y: 0, duration: 1, delay: 0.5, ease: "power3.out" });
-        gsap.to(".about-text", { scrollTrigger: { trigger: ".about-text", start: "top 85%" }, opacity: 1, y: 0, duration: 1.2 });
-        gsap.utils.toArray('.pillar-box').forEach((box, i) => { gsap.to(box, { scrollTrigger: { trigger: box, start: "top 88%" }, opacity: 1, y: 0, duration: 1, delay: i * 0.1 }); });
-        gsap.to(".cinematic-header", { scrollTrigger: { trigger: ".cinematic-header", start: "top 85%" }, opacity: 1, y: 0, duration: 1 });
-        gsap.utils.toArray('.film-frame').forEach((frame, i) => { gsap.to(frame, { scrollTrigger: { trigger: frame, start: "top 85%" }, opacity: 1, y: 0, duration: 1.2, delay: i * 0.15 }); });
-    </script>
-</body>
-</html>
+                <a href="
