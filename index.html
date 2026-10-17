@@ -32,6 +32,7 @@
         .progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 3px; background: transparent; z-index: 1000; }
         .progress-bar { height: 100%; background: var(--accent-gold); width: 0%; transition: width 0.1s ease; }
 
+        /* HEADER */
         header { position: fixed; top: 0; left: 0; width: 100%; padding: clamp(15px, 3vh, 30px) var(--spacing-container); display: flex; justify-content: space-between; align-items: center; z-index: 100; background: linear-gradient(to bottom, rgba(255,255,255,0.98), rgba(255,255,255,0.85)); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-subtle); opacity: 0; }
         
         .logo-text { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(0.85rem, 1.8vw, 1.1rem); letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-main); text-decoration: none; display: block; z-index: 10; }
@@ -44,6 +45,7 @@
         .vault-btn { font-size: clamp(0.65rem, 1vw, 0.75rem); text-transform: uppercase; letter-spacing: 1px; color: var(--accent-gold); background: none; border: none; border-bottom: 1px solid var(--accent-gold); padding-bottom: 2px; transition: opacity 0.3s ease; font-weight: 600; cursor: pointer; }
         .vault-btn:hover { opacity: 0.7; }
 
+        /* SECCIÓN HERO INMERSIVA */
         .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 var(--spacing-container); position: relative; z-index: 1; }
         
         .hero::before {
@@ -59,12 +61,14 @@
             background-attachment: fixed;
             opacity: 0.45; 
             z-index: -1;
+            transition: all 0.3s ease;
         }
 
         .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 4.2rem); font-weight: 800; line-height: 1.2; max-width: 1100px; margin-bottom: 24px; letter-spacing: -0.5px; color: var(--text-main); opacity: 0; transform: translateY(40px); }
         .hero h1 span { color: var(--accent-gold); }
         .hero p { font-size: clamp(0.8rem, 1.1vw, 1rem); color: var(--gray-muted); font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0; transform: translateY(30px); }
         
+        /* RESTO DE SECCIONES */
         .section-about { padding: var(--spacing-section) var(--spacing-container); max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); background: var(--bg-base); }
         .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(40px, 6vw, 80px); align-items: center; }
         .about-text { opacity: 0; transform: translateY(50px); }
@@ -104,6 +108,7 @@
         .social-link { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-main); text-decoration: none; border-bottom: 1px solid var(--accent-gold); padding-bottom: 2px; transition: opacity 0.3s; }
         .social-link:hover { opacity: 0.7; }
 
+        /* MODAL CONTÁCTANOS */
         .vault-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(15px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; padding: 20px; }
         .vault-modal.active { opacity: 1; pointer-events: auto; }
         
@@ -136,17 +141,27 @@
         .action-link { display: inline-block; margin-top: 25px; font-family: 'Syne', sans-serif; font-weight: 700; color: var(--text-main); text-decoration: none; border-bottom: 2px solid var(--accent-gold); padding-bottom: 2px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; transition: opacity 0.3s; }
         .action-link:hover { opacity: 0.7; }
 
-        /* --- LA CORRECCIÓN MAESTRA PARA MOBILE --- */
+        /* --- MEDIA QUERIES PARA MOBILE Y IPAD (AQUÍ ESTÁ LA MAGIA DEL REDIMENSIONAMIENTO) --- */
+        
+        /* Ajuste para iPad / Tablets y Móviles */
+        @media (max-width: 1024px) {
+            .hero::before { 
+                /* 1. Destruimos el bug de iOS Safari quitando el fixed */
+                background-attachment: scroll; 
+                /* 2. Reubicamos el foco visual para que los rostros no se corten */
+                background-position: center 20%; 
+            }
+        }
+
+        /* Ajuste específico para Teléfonos (Layout) */
         @media (max-width: 768px) {
             header { flex-direction: column; gap: 12px; align-items: flex-start; padding: 15px var(--spacing-container); }
             .logo-text { display: none; }
             .logo-img { display: block; }
             
-            /* Ergonomía del pulgar: Enlaces forzados a la derecha y envueltos dinámicamente */
             .nav-links { width: 100%; justify-content: flex-end; gap: 15px; flex-wrap: wrap; position: static; transform: none; }
             
             .hero { padding-top: 60px; }
-            .hero::before { background-attachment: scroll; } 
             
             .vault-content { padding: 30px 20px; }
             .modal-logo { max-width: 180px; }
