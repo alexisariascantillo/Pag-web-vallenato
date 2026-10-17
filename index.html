@@ -13,7 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; /* Oculta el cursor nativo */ }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --bg-base: #FFFFFF;
@@ -29,25 +29,19 @@
 
         body { background-color: var(--bg-base); color: var(--text-main); font-family: 'Inter', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
 
-        /* CURSOR MAGNÉTICO */
-        .custom-cursor {
-            position: fixed; top: 0; left: 0; width: 12px; height: 12px;
-            background-color: var(--accent-gold); border-radius: 50%; pointer-events: none;
-            z-index: 9999; transform: translate(-50%, -50%);
-            transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border 0.3s ease;
-        }
-        .custom-cursor.hover { width: 40px; height: 40px; background-color: transparent; border: 1px solid var(--text-main); backdrop-filter: grayscale(1); }
-
-        /* LÍNEA DE PROGRESO GLOBAL */
         .progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 3px; background: transparent; z-index: 1000; }
         .progress-bar { height: 100%; background: var(--accent-gold); width: 0%; transition: width 0.1s ease; }
 
         header { position: fixed; top: 0; left: 0; width: 100%; padding: clamp(15px, 3vh, 30px) var(--spacing-container); display: flex; justify-content: space-between; align-items: center; z-index: 100; background: linear-gradient(to bottom, rgba(255,255,255,0.98), rgba(255,255,255,0.85)); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-subtle); opacity: 0; }
-        .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(0.85rem, 1.8vw, 1.1rem); letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-main); text-decoration: none; }
+        
+        /* Logotipo adaptativo: Texto en desktop, Imagen oficial en mobile */
+        .logo-text { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(0.85rem, 1.8vw, 1.1rem); letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-main); text-decoration: none; display: block; }
+        .logo-img { display: none; max-height: 45px; width: auto; object-fit: contain; }
+
         .nav-links { display: flex; gap: clamp(10px, 2.5vw, 30px); align-items: center; }
         .nav-link { font-size: clamp(0.65rem, 1vw, 0.75rem); text-transform: uppercase; letter-spacing: 1px; color: var(--gray-muted); text-decoration: none; transition: color 0.3s ease; font-weight: 500; }
         .nav-link:hover { color: var(--text-main); }
-        .vault-btn { font-size: clamp(0.65rem, 1vw, 0.75rem); text-transform: uppercase; letter-spacing: 1px; color: var(--accent-gold); background: none; border: none; border-bottom: 1px solid var(--accent-gold); padding-bottom: 2px; transition: opacity 0.3s ease; font-weight: 600; }
+        .vault-btn { font-size: clamp(0.65rem, 1vw, 0.75rem); text-transform: uppercase; letter-spacing: 1px; color: var(--accent-gold); background: none; border: none; border-bottom: 1px solid var(--accent-gold); padding-bottom: 2px; transition: opacity 0.3s ease; font-weight: 600; cursor: pointer; }
         .vault-btn:hover { opacity: 0.7; }
 
         .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 var(--spacing-container); position: relative; }
@@ -95,8 +89,8 @@
         .vault-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; padding: 20px; }
         .vault-modal.active { opacity: 1; pointer-events: auto; }
         .vault-content { background: var(--bg-base); border: 1px solid rgba(197, 160, 89, 0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.05); padding: clamp(30px, 5vw, 60px); max-width: 500px; width: 100%; position: relative; text-align: center; }
-        .close-vault { position: absolute; top: 20px; right: 25px; background: none; border: none; color: var(--text-main); font-size: 1.5rem; }
-        .vault-submit { width: 100%; background: var(--text-main); color: var(--bg-base); border: none; padding: 16px; font-family: 'Syne', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; transition: background 0.3s; margin-bottom: 20px; }
+        .close-vault { position: absolute; top: 20px; right: 25px; background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
+        .vault-submit { width: 100%; background: var(--text-main); color: var(--bg-base); border: none; padding: 16px; font-family: 'Syne', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; transition: background 0.3s; margin-bottom: 20px; cursor: pointer; }
         .vault-submit:hover { background: var(--accent-gold); color: var(--text-main); }
         .modal-socials { display: flex; justify-content: center; gap: 15px; margin-top: 15px; border-top: 1px solid var(--border-subtle); padding-top: 15px; flex-wrap: wrap; }
         .modal-social-link { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-muted); text-decoration: none; transition: color 0.3s; }
@@ -105,21 +99,25 @@
         .action-link { display: inline-block; margin-top: 25px; font-family: 'Syne', sans-serif; font-weight: 700; color: var(--text-main); text-decoration: none; border-bottom: 2px solid var(--accent-gold); padding-bottom: 2px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; transition: opacity 0.3s; }
         .action-link:hover { opacity: 0.7; }
 
-        @media (max-width: 600px) {
+        /* Media query para activar el logotipo gráfico unicamente en versión mobile */
+        @media (max-width: 768px) {
             header { flex-direction: column; gap: 12px; align-items: flex-start; padding: 15px var(--spacing-container); }
+            .logo-text { display: none; }
+            .logo-img { display: block; }
             .nav-links { width: 100%; justify-content: space-between; }
             .hero { padding-top: 60px; }
-            * { cursor: auto; } .custom-cursor { display: none; } /* Apagar cursor custom en móviles */
         }
     </style>
 </head>
 <body>
 
-    <div class="custom-cursor" id="cursor"></div>
     <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
 
     <header>
-        <a href="index.html" class="logo">EPIFANIO COLLANTE</a>
+        <!-- Logotipo texto en escritorio / Logotipo imagen en mobile -->
+        <a href="index.html" class="logo-text">EPIFANIO COLLANTE</a>
+        <a href="index.html"><img src="image_3fe82d.png" alt="Epifanio Collante Logo" class="logo-img"></a>
+        
         <div class="nav-links">
             <a href="acerca.html" class="nav-link">Acerca de mí</a>
             <a href="archivo.html" class="nav-link">Archivo</a>
@@ -156,11 +154,11 @@
     <section class="section-cinematic" id="cinematic">
         <div class="cinematic-header">
             <h2 class="section-title" style="margin-bottom:0;">Fotogramas del Origen</h2>
-            <a href="archivo.html" class="action-link" style="margin-top:0;">[ Ver Archivo ]</a>
+            <a href="archivo.html" class="action-link" style="margin-top:0;">[ Ver Archivo Completo ]</a>
         </div>
         <div class="frame-container">
-            <div class="film-frame"><img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=2000&auto=format&fit=crop" alt="Fonseca"></div>
-            <div class="film-frame"><img src="https://images.unsplash.com/photo-1470229722913-7c090be5c520?q=80&w=2000&auto=format&fit=crop" alt="Concert"></div>
+            <div class="film-frame"><img src="image_3fe847.jpg" alt="Epifanio Tarima"></div>
+            <div class="film-frame"><img src="image_3fe84b.jpg" alt="Concierto Epifanio"></div>
         </div>
     </section>
 
@@ -202,18 +200,6 @@
     </div>
 
     <script>
-        // Lógica Global del Cursor Magnético y Scroll Bar
-        const cursor = document.getElementById('cursor');
-        document.addEventListener('mousemove', (e) => { gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 }); });
-        
-        function addHoverEffect() {
-            document.querySelectorAll('a, button, .film-frame, .pillar-box').forEach(el => {
-                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-            });
-        }
-        addHoverEffect();
-
         window.onscroll = function() {
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -234,7 +220,6 @@
             }
         });
 
-        // GSAP Coreografía
         gsap.to("header", { opacity: 1, duration: 1, ease: "power3.out" });
         gsap.to(".hero h1", { opacity: 1, y: 0, duration: 1.2, delay: 0.3, ease: "power4.out" });
         gsap.to(".hero p", { opacity: 1, y: 0, duration: 1, delay: 0.5, ease: "power3.out" });

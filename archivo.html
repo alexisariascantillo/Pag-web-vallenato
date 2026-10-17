@@ -12,12 +12,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root { --bg-base: #FFFFFF; --text-main: #0A0A0A; --accent-gold: #C5A059; --gray-muted: #666666; --border-subtle: rgba(0, 0, 0, 0.1); --font-code: 'Fira Code', monospace; --spacing-container: clamp(20px, 5vw, 60px); }
         body { background-color: var(--bg-base); color: var(--text-main); font-family: 'Inter', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
 
-        .custom-cursor { position: fixed; top: 0; left: 0; width: 12px; height: 12px; background-color: var(--accent-gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border 0.3s ease; }
-        .custom-cursor.hover { width: 40px; height: 40px; background-color: transparent; border: 1px solid var(--text-main); backdrop-filter: grayscale(1); }
         .progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 3px; background: transparent; z-index: 1000; }
         .progress-bar { height: 100%; background: var(--accent-gold); width: 0%; transition: width 0.1s ease; }
 
@@ -46,11 +44,10 @@
         .ui-bottom { font-family: 'Syne', sans-serif; font-size: clamp(1rem, 1.5vw, 1.5rem); font-weight: 700; color: #FFFFFF; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
 
         @media (max-width: 900px) { .frame-tall, .frame-square { grid-column: span 12; aspect-ratio: 16 / 9; } .frame-large { aspect-ratio: 16 / 9; } }
-        @media (max-width: 600px) { header { flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links { width: 100%; justify-content: space-between; } * { cursor: auto; } .custom-cursor { display: none; } }
+        @media (max-width: 600px) { header { flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links { width: 100%; justify-content: space-between; } }
     </style>
 </head>
 <body>
-    <div class="custom-cursor" id="cursor"></div>
     <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
 
     <header>
@@ -64,36 +61,32 @@
     </header>
 
     <section class="vault-header">
-        <h1>Archivo <span>Clasificado.</span></h1>
+        <h1>Archivo <span>Fotográfico.</span></h1>
         <div class="vault-meta">
-            <span>ENTRADAS: 003</span>
-            <span>FORMATO: 35MM & DIGITAL</span>
+            <span>REGISTROS: 04 ACTIVOS</span>
+            <span>FORMATO: DIRECTO ESCENARIO</span>
         </div>
     </section>
 
     <main class="gallery-container">
+        <!-- Fotograma 1: Imagen de Tarima en Vivo -->
         <div class="frame frame-large">
-            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=2000&auto=format&fit=crop" alt="Camerino">
-            <div class="frame-ui"><div class="ui-top"><span>SCENE 01</span><span>FONSECA</span></div><div class="ui-bottom">EL ORIGEN.</div></div>
+            <img src="image_3fe847.jpg" alt="Epifanio Collante Tarima">
+            <div class="frame-ui"><div class="ui-top"><span>SCENE 01</span><span>LIVE STAGE</span></div><div class="ui-bottom">LA FUERZA DEL VALLENATO.</div></div>
         </div>
+        <!-- Fotograma 2: Concierto / Luces -->
         <div class="frame frame-tall">
-            <img src="https://images.unsplash.com/photo-1493225457224-eda0e6fd3e61?q=80&w=1000&auto=format&fit=crop" alt="Acordeon">
-            <div class="frame-ui"><div class="ui-top"><span>SCENE 02</span><span>f/1.4</span></div><div class="ui-bottom">EL INSTRUMENTO.</div></div>
+            <img src="image_3fe84b.jpg" alt="Concierto Epifanio">
+            <div class="frame-ui"><div class="ui-top"><span>SCENE 02</span><span>CONCERT RAW</span></div><div class="ui-bottom">CONEXIÓN ABSOLUTA.</div></div>
         </div>
+        <!-- Fotograma 3: Escenario y Luces Rojas -->
         <div class="frame frame-square">
-            <img src="https://images.unsplash.com/photo-1470229722913-7c090be5c520?q=80&w=1500&auto=format&fit=crop" alt="Euforia">
-            <div class="frame-ui"><div class="ui-top"><span>SCENE 03</span><span>PERÚ</span></div><div class="ui-bottom">CATARSIS COLECTIVA.</div></div>
+            <img src="image_3fe865.jpg" alt="Escenario Gira">
+            <div class="frame-ui"><div class="ui-top"><span>SCENE 03</span><span>TOUR SETUP</span></div><div class="ui-bottom">EL RITMO DE LA SABANA.</div></div>
         </div>
     </main>
 
     <script>
-        const cursor = document.getElementById('cursor');
-        document.addEventListener('mousemove', (e) => { gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 }); });
-        document.querySelectorAll('a, button, .frame').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-        });
-
         window.onscroll = function() {
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
