@@ -45,17 +45,16 @@
         .vault-btn { font-size: clamp(0.65rem, 1vw, 0.75rem); text-transform: uppercase; letter-spacing: 1px; color: var(--accent-gold); background: none; border: none; border-bottom: 1px solid var(--accent-gold); padding-bottom: 2px; transition: opacity 0.3s ease; font-weight: 600; cursor: pointer; }
         .vault-btn:hover { opacity: 0.7; }
 
-        /* --- SECCIÓN HERO (REDISEÑO CINEMATOGRÁFICO: TEXTO ABAJO, ROSTROS LIBRES) --- */
+        /* --- SECCIÓN HERO (AJUSTE EXACTO AL RECUADRO ROJO) --- */
         .hero { 
             height: 100vh; 
             display: flex; 
             flex-direction: column; 
-            /* ANCLAJE INFERIOR: El texto ahora descansa en la parte baja de la pantalla */
-            justify-content: flex-end; 
+            justify-content: flex-start; /* Cambiado para que el texto empiece desde arriba hacia abajo */
             align-items: center; 
             text-align: center; 
-            /* Relleno inferior para que no quede pegado al borde */
-            padding: 0 var(--spacing-container) 15vh var(--spacing-container); 
+            /* 58vh empuja el inicio del texto exactamente a la altura del acordeón (el recuadro rojo) */
+            padding: 58vh var(--spacing-container) 0 var(--spacing-container); 
             position: relative; 
             z-index: 1; 
         }
@@ -76,14 +75,12 @@
             transition: all 0.3s ease;
         }
 
-        /* TIPOGRAFÍA REDUCIDA Y SOFISTICADA */
         .hero h1 { 
             font-family: 'Syne', sans-serif; 
-            /* Tamaño reducido: de 4.2rem máximos bajamos a 3.2rem */
             font-size: clamp(1.5rem, 3.2vw, 3.2rem); 
             font-weight: 800; 
             line-height: 1.2; 
-            max-width: 950px; /* Caja de texto más contenida */
+            max-width: 950px; 
             margin-bottom: 20px; 
             letter-spacing: -0.5px; 
             color: var(--text-main); 
@@ -92,7 +89,6 @@
         }
         .hero h1 span { color: var(--accent-gold); }
         .hero p { 
-            /* Subtítulo también reducido proporcionalmente */
             font-size: clamp(0.75rem, 1vw, 0.9rem); 
             color: var(--gray-muted); 
             font-weight: 500; 
@@ -191,8 +187,8 @@
             
             .nav-links { width: 100%; justify-content: flex-end; gap: 15px; flex-wrap: wrap; position: static; transform: none; }
             
-            /* En móvil, aseguramos que el texto quede abajo pero con suficiente respiro de la pantalla superior */
-            .hero { padding-top: 100px; padding-bottom: 10vh; justify-content: flex-end; }
+            /* En móvil, ajustamos el padding top para que caiga en la misma zona del acordeón (el recuadro rojo) */
+            .hero { padding-top: 55vh; padding-bottom: 0; justify-content: flex-start; }
             
             .vault-content { padding: 30px 20px; }
             .modal-logo { max-width: 180px; }
@@ -304,4 +300,42 @@
             <div class="modal-socials">
                 <a href="https://www.instagram.com/epifaniocollante" target="_blank" class="modal-social-link">Instagram</a>
                 <a href="https://youtube.com/@musico415" target="_blank" class="modal-social-link">YouTube</a>
-                <a href="
+                <a href="https://www.facebook.com/share/1EnpsgvLqo/" target="_blank" class="modal-social-link">Facebook</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleVault() {
+            const modal = document.getElementById('vaultModal');
+            modal.classList.toggle('active');
+        }
+
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            document.getElementById("myBar").style.width = (winScroll / height) * 100 + "%";
+        };
+
+        const termInput = document.getElementById('termInput');
+        const termOutput = document.getElementById('termOutput');
+        termInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const command = this.value.toLowerCase().trim();
+                this.value = '';
+                if (command === 'help' || command === 'contacto') { termOutput.innerHTML = "> <b>Gestión:</b> Angélica Collante<br> - Teléfono: +57 315 829 9357"; } 
+                else if (command === 'status') { termOutput.innerHTML = "> <span class='success'>ARTISTA DISPONIBLE.</span>"; } 
+                else if (command !== '') { termOutput.innerHTML = "> <span class='error'>ERR: Comando no reconocido.</span> Escriba 'contacto'."; }
+            }
+        });
+
+        gsap.to("header", { opacity: 1, duration: 1, ease: "power3.out" });
+        gsap.to(".hero h1", { opacity: 1, y: 0, duration: 1.2, delay: 0.3, ease: "power4.out" });
+        gsap.to(".hero p", { opacity: 1, y: 0, duration: 1, delay: 0.5, ease: "power3.out" });
+        gsap.to(".about-text", { scrollTrigger: { trigger: ".about-text", start: "top 85%" }, opacity: 1, y: 0, duration: 1.2 });
+        gsap.utils.toArray('.pillar-box').forEach((box, i) => { gsap.to(box, { scrollTrigger: { trigger: box, start: "top 88%" }, opacity: 1, y: 0, duration: 1, delay: i * 0.1 }); });
+        gsap.to(".cinematic-header", { scrollTrigger: { trigger: ".cinematic-header", start: "top 85%" }, opacity: 1, y: 0, duration: 1 });
+        gsap.utils.toArray('.film-frame').forEach((frame, i) => { gsap.to(frame, { scrollTrigger: { trigger: frame, start: "top 85%" }, opacity: 1, y: 0, duration: 1.2, delay: i * 0.15 }); });
+    </script>
+</body>
+</html>
